@@ -1,0 +1,1092 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Parth Dhawan · Data Analyst</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Parth Dhawan, data analyst. Four projects that each end in a business answer: cart leakage, email uplift, dark-store break-even and an automated retail pipeline.">
+<meta property="og:title" content="Parth Dhawan · Data Analyst">
+<meta property="og:description" content="I find where the money leaks. SQL, Python, Excel and Power BI projects with interactive models.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: an analyst's working ledger. Ruled hero with a printing findings receipt,
+   then each project as a case file: question, answer, a live model you can push, method, limits. */
+:root{
+  --paper:#f2f4f7; --surface:#ffffff; --sunk:#e8ecf1;
+  --ink:#111923; --ink-2:#4b5869; --ink-3:#7a8798; --rule:#d6dde5;
+  --accent:#2142c8; --accent-soft:#e3e8fb;
+  --gain:#0b7a51; --gain-soft:#dcf1e8;
+  --leak:#c4402a; --leak-soft:#f8e1dc;
+  --shadow:0 1px 0 rgba(17,25,35,.04),0 8px 24px -12px rgba(17,25,35,.18);
+  --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --f-body:"Geist","Helvetica Neue",Arial,system-ui,sans-serif;
+  --f-mono:"Geist Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --r:10px;
+  --deep:#0f1a33; --deep-fg:#eef2f8; --deep-2:#a9b6cc; --deep-rule:#2a3a5c;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0d131b; --surface:#141c27; --sunk:#1a2431;
+    --ink:#e6ebf1; --ink-2:#a3b0bf; --ink-3:#738195; --rule:#243041;
+    --accent:#8ea2ff; --accent-soft:#1e2a52;
+    --gain:#43c592; --gain-soft:#11342a;
+    --leak:#ff8466; --leak-soft:#3d1f19;
+    --shadow:0 1px 0 rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.7);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0d131b; --surface:#141c27; --sunk:#1a2431;
+  --ink:#e6ebf1; --ink-2:#a3b0bf; --ink-3:#738195; --rule:#243041;
+  --accent:#8ea2ff; --accent-soft:#1e2a52;
+  --gain:#43c592; --gain-soft:#11342a;
+  --leak:#ff8466; --leak-soft:#3d1f19;
+  --shadow:0 1px 0 rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.7);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.6 var(--f-body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--paper)}
+a{color:inherit}
+img{max-width:100%}
+::selection{background:var(--accent);color:var(--paper)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1160px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.label{font:500 12px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.02em}
+p{margin:0}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--paper) 86%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .2s}
+.nav.scrolled{border-bottom-color:var(--rule)}
+.nav .wrap{display:flex;align-items:center;gap:20px;height:64px}
+.mark{display:flex;align-items:center;gap:10px;text-decoration:none;font:600 15px/1 var(--f-body)}
+.mark b{display:grid;place-items:center;width:32px;height:32px;border-radius:8px;background:var(--ink);color:var(--paper);font:800 14px/1 var(--f-display);letter-spacing:-.02em}
+.nav-links{display:flex;gap:4px;margin-left:auto}
+.nav-links a{text-decoration:none;font-size:14px;color:var(--ink-2);padding:8px 12px;border-radius:8px;transition:color .15s,background .15s}
+.nav-links a:hover,.nav-links a.on{color:var(--ink);background:var(--sunk)}
+.icon-btn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 10px;border:1px solid var(--rule);border-radius:8px;background:var(--surface);color:var(--ink-2);font:500 13px/1 var(--f-body);cursor:pointer;transition:border-color .15s,color .15s}
+.icon-btn:hover{color:var(--ink);border-color:var(--ink-3)}
+.icon-btn kbd{font:500 11px/1 var(--f-mono);padding:3px 5px;border-radius:4px;background:var(--sunk);color:var(--ink-3)}
+.icon-btn svg{width:16px;height:16px}
+@media (max-width:860px){.nav-links{display:none}.nav .tools{margin-left:auto}}
+@media (max-width:600px){.icon-btn kbd{display:none}}
+.tools{display:flex;gap:8px}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--rule)}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(var(--rule) 1px,transparent 1px),linear-gradient(90deg,var(--rule) 1px,transparent 1px);
+  background-size:100% 32px,96px 100%;opacity:.45;
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,transparent 85%);mask-image:linear-gradient(180deg,#000 0%,transparent 85%)}
+.hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.9fr);gap:56px;align-items:center;padding-block:72px 64px}
+@media (max-width:920px){.hero .wrap{grid-template-columns:minmax(0,1fr);gap:40px;padding-block:44px 48px}}
+.status{display:inline-flex;align-items:center;gap:10px;padding:6px 12px 6px 8px;border:1px solid var(--rule);border-radius:999px;background:var(--surface);font-size:13px;color:var(--ink-2)}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--gain);box-shadow:0 0 0 4px var(--gain-soft);animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 7px transparent}}
+.hero h1{font-size:clamp(44px,7.4vw,92px);line-height:.95;font-weight:800;margin:22px 0 22px;letter-spacing:-.045em}
+.hero h1 .leak{color:var(--leak);position:relative;white-space:nowrap}
+.hero h1 .leak::after{content:"";position:absolute;left:2%;right:2%;bottom:.04em;height:.08em;background:currentColor;opacity:.25;border-radius:4px}
+.lede{font-size:clamp(17px,1.6vw,19px);line-height:1.6;color:var(--ink-2);max-width:56ch}
+.lede strong{color:var(--ink);font-weight:600}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:10px;height:46px;padding:0 18px;border-radius:10px;font:600 15px/1 var(--f-body);text-decoration:none;cursor:pointer;border:1px solid transparent;transition:transform .15s,background .15s,border-color .15s}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--ink);color:var(--paper)}
+.btn-primary:hover{background:var(--accent)}
+.btn-ghost{background:var(--surface);color:var(--ink);border-color:var(--rule)}
+.btn-ghost:hover{border-color:var(--ink-3)}
+.btn svg{width:17px;height:17px}
+.facts{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:36px;padding-top:22px;border-top:1px dashed var(--rule)}
+.facts div{display:flex;flex-direction:column;gap:2px}
+.facts b{font:600 20px/1.2 var(--f-mono);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.facts span{font-size:13px;color:var(--ink-3)}
+
+/* receipt: the signature */
+.receipt{position:relative;background:var(--surface);border:1px solid var(--rule);border-radius:4px;box-shadow:var(--shadow);padding:26px 24px 30px;font-family:var(--f-mono);font-size:13px;line-height:1.5;transform:rotate(.6deg);max-width:440px;justify-self:end;width:100%}
+@media (max-width:920px){.receipt{justify-self:start;transform:none}}
+.receipt::after{content:"";position:absolute;left:-1px;right:-1px;bottom:-9px;height:10px;
+  background:radial-gradient(circle at 6px 0,transparent 5px,var(--surface) 5.5px) 0 0/12px 10px repeat-x;filter:drop-shadow(0 1px 0 var(--rule))}
+.r-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px dashed var(--rule);padding-bottom:12px;margin-bottom:6px;color:var(--ink-3);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.r-head b{color:var(--ink);font-size:13px;letter-spacing:.04em}
+.r-line{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 14px;padding:12px 0;border-bottom:1px dotted var(--rule)}
+.r-line .q{color:var(--ink-2);min-width:0}
+.r-line .q small{display:block;color:var(--ink-3);font-size:11px;margin-top:2px}
+.r-line .v{font-weight:500;text-align:right;white-space:nowrap}
+.r-line .v.leak{color:var(--leak)} .r-line .v.gain{color:var(--gain)}
+.r-line.printing{animation:print .5s steps(6,end) both}
+@keyframes print{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+.r-foot{display:flex;justify-content:space-between;padding-top:14px;font-weight:500}
+.r-foot span:last-child{color:var(--accent)}
+.r-replay{position:absolute;top:10px;right:10px;border:0;background:none;color:var(--ink-3);cursor:pointer;font:500 11px/1 var(--f-mono);padding:6px}
+.r-replay:hover{color:var(--accent)}
+.barcode{margin-top:16px;height:28px;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5px,transparent 5px 8px,var(--ink) 8px 11px,transparent 11px 12px);opacity:.75}
+
+/* tl;dr */
+.tldr{margin-top:22px}
+.tldr summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:8px;font:500 14px/1 var(--f-body);color:var(--accent)}
+.tldr summary::-webkit-details-marker{display:none}
+.tldr summary::before{content:"+";font:500 16px/1 var(--f-mono);width:18px;height:18px;display:grid;place-items:center;border:1px solid currentColor;border-radius:4px}
+.tldr[open] summary::before{content:"−"}
+.tldr ul{margin:14px 0 0;padding:16px 18px 16px 34px;background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);color:var(--ink-2);font-size:15px;max-width:60ch;display:grid;gap:6px}
+.tldr li strong{color:var(--ink)}
+
+/* ---------- sections ---------- */
+section{padding-block:96px}
+@media (max-width:700px){section{padding-block:64px}}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px 56px;align-items:end;margin-bottom:48px}
+@media (max-width:820px){.sec-head{grid-template-columns:minmax(0,1fr)}}
+.sec-head h2{font-size:clamp(34px,4.6vw,56px);line-height:1;font-weight:800;margin-top:12px;letter-spacing:-.035em}
+.sec-head p{color:var(--ink-2);font-size:17px;max-width:52ch}
+
+/* principles */
+.principles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--ink);border-bottom:1px solid var(--rule)}
+@media (max-width:900px){.principles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.principles{grid-template-columns:minmax(0,1fr)}}
+.principle{padding:26px 24px 28px 0;display:flex;flex-direction:column;gap:10px}
+.principle+.principle{padding-left:24px;border-left:1px solid var(--rule)}
+@media (max-width:900px){.principle:nth-child(3){padding-left:0;border-left:0}.principle:nth-child(n+3){border-top:1px solid var(--rule)}}
+@media (max-width:520px){.principle,.principle+.principle{padding-left:0;border-left:0}.principle+.principle{border-top:1px solid var(--rule)}}
+.principle h3{font-size:21px;font-weight:600;letter-spacing:-.02em}
+.principle p{color:var(--ink-2);font-size:15px}
+.principle .glyph{font:500 13px/1 var(--f-mono);color:var(--accent)}
+
+/* ---------- case files ---------- */
+.case{background:var(--surface);border:1px solid var(--rule);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+.case+.case{margin-top:40px}
+.case-top{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:0;border-bottom:1px solid var(--rule)}
+@media (max-width:900px){.case-top{grid-template-columns:minmax(0,1fr)}}
+.case-brief{padding:36px 36px 32px;display:flex;flex-direction:column;gap:18px;min-width:0}
+@media (max-width:600px){.case-brief{padding:26px 20px 24px}}
+.case-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.chip{display:inline-flex;align-items:center;height:26px;padding:0 10px;border-radius:6px;background:var(--sunk);color:var(--ink-2);font:500 12px/1 var(--f-mono)}
+.chip.domain{background:var(--accent-soft);color:var(--accent)}
+.case h3{font-size:clamp(26px,3vw,36px);line-height:1.08;font-weight:800;letter-spacing:-.03em}
+.qa{display:grid;gap:14px}
+.qa div{display:grid;grid-template-columns:84px minmax(0,1fr);gap:12px;align-items:baseline}
+.qa dt{font:500 11px/1.4 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.qa dd{margin:0;color:var(--ink-2)}
+.qa dd strong{color:var(--ink);font-weight:600}
+@media (max-width:480px){.qa div{grid-template-columns:minmax(0,1fr);gap:2px}}
+.case-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto;padding-top:6px}
+.link-btn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border-radius:8px;border:1px solid var(--rule);text-decoration:none;font:500 14px/1 var(--f-body);color:var(--ink);background:var(--paper);transition:border-color .15s,color .15s}
+.link-btn:hover{border-color:var(--accent);color:var(--accent)}
+.link-btn svg{width:15px;height:15px}
+.case-kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));background:var(--paper);border-left:1px solid var(--rule)}
+@media (max-width:900px){.case-kpis{border-left:0;border-top:1px solid var(--rule)}}
+.kpi{padding:26px 26px 24px;display:flex;flex-direction:column;justify-content:center;gap:6px;border-bottom:1px solid var(--rule);min-width:0}
+.kpi:nth-child(odd){border-right:1px solid var(--rule)}
+.kpi:nth-last-child(-n+2){border-bottom:0}
+.kpi b{font:500 clamp(24px,2.6vw,32px)/1.05 var(--f-mono);font-variant-numeric:tabular-nums;letter-spacing:-.04em}
+.kpi b.leak{color:var(--leak)} .kpi b.gain{color:var(--gain)}
+.kpi span{font-size:13.5px;color:var(--ink-2);line-height:1.4}
+@media (max-width:600px){.kpi{padding:18px 16px}}
+
+.lab{padding:32px 36px 36px;border-bottom:1px solid var(--rule)}
+@media (max-width:600px){.lab{padding:24px 20px 28px}}
+.lab-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px 20px;margin-bottom:22px}
+.lab-head h4{margin:0;font:600 18px/1.3 var(--f-body);letter-spacing:-.01em}
+.lab-head p{color:var(--ink-3);font-size:13.5px}
+.lab-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:36px}
+@media (max-width:900px){.lab-grid{grid-template-columns:minmax(0,1fr)}}
+
+.case-bottom{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
+@media (max-width:900px){.case-bottom{grid-template-columns:minmax(0,1fr)}}
+.method,.limits{padding:28px 36px 32px;min-width:0}
+@media (max-width:600px){.method,.limits{padding:22px 20px 26px}}
+.limits{border-left:1px solid var(--rule);background:var(--paper)}
+@media (max-width:900px){.limits{border-left:0;border-top:1px solid var(--rule)}}
+.method ol{margin:14px 0 0;padding:0;list-style:none;counter-reset:s;display:grid;gap:10px}
+.method li{counter-increment:s;display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;color:var(--ink-2);font-size:15px}
+.method li::before{content:counter(s);font:500 12px/22px var(--f-mono);color:var(--accent);text-align:center;border:1px solid var(--rule);border-radius:6px;height:22px}
+.limits ul{margin:14px 0 0;padding:0 0 0 18px;display:grid;gap:8px;color:var(--ink-2);font-size:14.5px}
+.limits li::marker{color:var(--ink-3)}
+
+/* controls */
+.ctrl{display:grid;gap:8px;margin-bottom:18px}
+.ctrl-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.ctrl label{font-size:14px;color:var(--ink-2)}
+.ctrl output{font:500 15px/1 var(--f-mono);font-variant-numeric:tabular-nums}
+.ctrl small{font-size:12px;color:var(--ink-3)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:transparent;cursor:pointer;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:4px;background:linear-gradient(90deg,var(--accent) var(--p,50%),var(--rule) var(--p,50%))}
+input[type=range]::-moz-range-track{height:4px;border-radius:4px;background:var(--rule)}
+input[type=range]::-moz-range-progress{height:4px;border-radius:4px;background:var(--accent)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--surface);border:2px solid var(--accent);margin-top:-8px;box-shadow:0 1px 4px rgba(0,0,0,.2);transition:transform .1s}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--surface);border:2px solid var(--accent)}
+input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.seg button{height:32px;padding:0 12px;border-radius:8px;border:1px solid var(--rule);background:var(--paper);color:var(--ink-2);font:500 13px/1 var(--f-body);cursor:pointer;transition:all .15s}
+.seg button:hover{color:var(--ink);border-color:var(--ink-3)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.readout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden}
+.readout div{background:var(--paper);padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.readout b{font:500 22px/1.1 var(--f-mono);font-variant-numeric:tabular-nums;letter-spacing:-.03em;transition:color .2s}
+.readout span{font-size:12.5px;color:var(--ink-3)}
+.pos{color:var(--gain)} .neg{color:var(--leak)}
+.note{margin-top:14px;font-size:12.5px;color:var(--ink-3);line-height:1.5}
+
+/* charts */
+.chart{width:100%;height:auto;display:block;overflow:visible}
+.chart text{font-family:var(--f-mono);font-size:11px;fill:var(--ink-3)}
+.chart .lbl-ink{fill:var(--ink)}
+.chart .axis{stroke:var(--rule)}
+.chart .grid{stroke:var(--rule);stroke-dasharray:2 4}
+.tip{position:fixed;z-index:80;pointer-events:none;background:var(--ink);color:var(--paper);font:500 12px/1.4 var(--f-mono);padding:8px 10px;border-radius:6px;max-width:240px;opacity:0;transform:translate(-50%,calc(-100% - 12px));transition:opacity .12s}
+.tip.on{opacity:1}
+
+/* A1 grid */
+.cells{display:grid;grid-template-columns:repeat(31,minmax(0,1fr));gap:2px;margin-top:6px}
+.cells i{aspect-ratio:1;border-radius:2px;background:var(--sunk);transition:background .3s,transform .2s}
+.cells i.c50{background:var(--leak)}
+.cells i.c80{background:color-mix(in srgb,var(--leak) 45%,var(--sunk))}
+.cells.dim i:not(.hl){opacity:.35}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:12px;font-size:12.5px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{width:11px;height:11px;border-radius:2px;display:inline-block}
+.funnel{margin-top:26px}
+.fbar{display:flex;height:42px;border-radius:6px;overflow:hidden;gap:2px;margin-top:10px}
+.fbar div{display:flex;align-items:center;padding:0 12px;font:500 13px/1 var(--f-mono);white-space:nowrap;overflow:hidden}
+.fbar .ab{background:var(--leak-soft);color:var(--leak);flex:0 0 76.5%}
+.fbar .bt{background:var(--gain-soft);color:var(--gain);flex:1}
+
+/* A2 quiz */
+.quiz{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:4px 0 16px}
+.quiz button{text-align:left;padding:12px 14px;border-radius:10px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);font:500 14px/1.3 var(--f-body);cursor:pointer;transition:all .15s}
+.quiz button:hover{border-color:var(--accent)}
+.quiz button small{display:block;color:var(--ink-3);font-weight:400;font-size:12.5px;margin-top:3px}
+.quiz button.right{border-color:var(--gain);background:var(--gain-soft)}
+.quiz button.wrong{border-color:var(--leak);background:var(--leak-soft)}
+.verdict{min-height:48px;font-size:14.5px;color:var(--ink-2);padding:12px 14px;border-radius:10px;background:var(--sunk)}
+.verdict strong{color:var(--ink)}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;position:relative}
+@media (max-width:900px){.pipe{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:520px){.pipe{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stage{position:relative;padding:14px 14px 16px;border:1px solid var(--rule);border-radius:10px;background:var(--paper);display:flex;flex-direction:column;gap:6px;min-width:0;transition:border-color .3s,background .3s}
+.stage .label{font-size:10.5px}
+.stage h5{margin:0;font:600 15px/1.2 var(--f-body)}
+.stage p{font:400 12.5px/1.45 var(--f-mono);color:var(--ink-2)}
+.stage .tick{position:absolute;top:12px;right:12px;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--rule);display:grid;place-items:center;transition:all .3s}
+.stage .tick svg{width:10px;height:10px;opacity:0;transition:opacity .2s}
+.stage.done{border-color:color-mix(in srgb,var(--gain) 50%,var(--rule))}
+.stage.done .tick{background:var(--gain);border-color:var(--gain)}
+.stage.done .tick svg{opacity:1;stroke:var(--paper)}
+.stage.run{border-color:var(--accent);background:var(--accent-soft)}
+.stage.run .tick{border-color:var(--accent);border-top-color:transparent;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.gate{display:grid;grid-template-columns:repeat(41,minmax(0,1fr));gap:2px;margin-top:20px}
+.gate i{height:22px;border-radius:2px;background:var(--gain);transition:background .15s}
+.gate.reset i{background:var(--sunk)}
+.gate i.off{background:var(--sunk)}
+.term{margin-top:18px;background:var(--deep);color:var(--deep-fg);border-radius:10px;padding:16px 18px;font:400 13px/1.7 var(--f-mono);min-height:174px;overflow-x:auto}
+.term .p{color:var(--deep-2)}
+.term .ok{color:#5fd39e}
+.term .warn{color:#ffb086}
+.term{box-shadow:inset 0 0 0 1px var(--deep-rule)}
+.term div{white-space:pre}
+
+/* skills matrix */
+.matrix-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:16px;background:var(--surface)}
+.matrix{width:100%;border-collapse:collapse;min-width:640px}
+.matrix th,.matrix td{padding:12px 16px;border-bottom:1px solid var(--rule);text-align:center;font-size:14px}
+.matrix thead th{font:500 12px/1.3 var(--f-mono);color:var(--ink-3);letter-spacing:.04em;vertical-align:bottom;background:var(--paper)}
+.matrix thead th a{text-decoration:none;color:var(--ink-2);display:block}
+.matrix thead th a:hover{color:var(--accent)}
+.matrix thead th b{display:block;color:var(--ink);font:600 14px/1.2 var(--f-body);letter-spacing:0;margin-top:3px}
+.matrix th[scope=row]{text-align:left;font-weight:500;color:var(--ink)}
+.matrix th[scope=row] small{display:block;color:var(--ink-3);font:400 12px/1.3 var(--f-mono);margin-top:2px}
+.matrix tbody tr{cursor:pointer;transition:background .15s}
+.matrix tbody tr:hover,.matrix tbody tr.on{background:var(--accent-soft)}
+.matrix tbody tr:last-child th,.matrix tbody tr:last-child td{border-bottom:0}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--accent)}
+.dot.lite{background:transparent;border:1.5px solid var(--accent)}
+.matrix td.none::before{content:"";display:inline-block;width:12px;height:1px;background:var(--rule);vertical-align:middle}
+.mfilter{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+
+/* journey */
+.timeline{position:relative;display:grid;gap:0;margin-left:8px}
+.timeline::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:1px;background:var(--rule)}
+.t-item{position:relative;display:grid;grid-template-columns:150px minmax(0,1fr);gap:8px 32px;padding:0 0 36px 32px}
+@media (max-width:640px){.t-item{grid-template-columns:minmax(0,1fr)}}
+.t-item::before{content:"";position:absolute;left:-5px;top:7px;width:11px;height:11px;border-radius:50%;background:var(--paper);border:2px solid var(--ink-3)}
+.t-item.now::before{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 5px var(--accent-soft)}
+.t-item .when{font:500 13px/1.6 var(--f-mono);color:var(--ink-3)}
+.t-item h3{font-size:22px;font-weight:600;letter-spacing:-.02em}
+.t-item p{color:var(--ink-2);margin-top:6px;max-width:62ch}
+.creds{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.creds a{font:500 12.5px/1 var(--f-mono);text-decoration:none;color:var(--accent);padding:7px 10px;border-radius:6px;background:var(--accent-soft)}
+.creds a:hover{text-decoration:underline}
+.journey-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:56px}
+@media (max-width:900px){.journey-grid{grid-template-columns:minmax(0,1fr)}}
+.toolbox{align-self:start;position:sticky;top:96px;background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:26px}
+@media (max-width:900px){.toolbox{position:static}}
+.toolbox h3{font-size:20px;font-weight:600;margin-bottom:16px}
+.tool-group+.tool-group{margin-top:18px;padding-top:18px;border-top:1px dashed var(--rule)}
+.tool-group p{color:var(--ink-2);font-size:14.5px;margin-top:6px}
+
+/* contact */
+.contact{background:var(--deep);color:var(--deep-fg);border-radius:20px;padding:56px;position:relative;overflow:hidden}
+@media (max-width:600px){.contact{padding:32px 22px}}
+.contact::before{content:"";position:absolute;inset:0;background-image:linear-gradient(color-mix(in srgb,var(--deep-fg) 6%,transparent) 1px,transparent 1px);background-size:100% 32px;pointer-events:none}
+.contact>*{position:relative}
+.contact h2{font-size:clamp(36px,5.6vw,72px);line-height:.98;font-weight:800;letter-spacing:-.04em;max-width:14ch}
+.contact p{color:var(--deep-2);font-size:18px;margin-top:18px;max-width:52ch}
+.contact-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px;align-items:center}
+.email-box{display:flex;align-items:center;gap:4px;padding:6px 6px 6px 16px;border-radius:12px;background:color-mix(in srgb,var(--deep-fg) 8%,var(--deep));border:1px solid var(--deep-rule);max-width:100%}
+.email-box span{font:500 15px/1 var(--f-mono);user-select:all;overflow-wrap:anywhere;min-width:0}
+.email-box button{height:36px;padding:0 14px;border-radius:8px;border:0;background:var(--deep-fg);color:var(--deep);font:600 13px/1 var(--f-body);cursor:pointer;flex:none}
+.contact .btn-ghost{background:transparent;color:var(--deep-fg);border-color:var(--deep-rule)}
+.contact .btn-ghost:hover{border-color:var(--deep-fg)}
+footer{padding-block:36px 48px;color:var(--ink-3);font-size:13px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+
+/* command palette */
+.cmdk{position:fixed;inset:0;z-index:90;background:color-mix(in srgb,var(--ink) 40%,transparent);display:grid;place-items:start center;padding:12vh max(16px,env(safe-area-inset-right,0px)) 16px max(16px,env(safe-area-inset-left,0px))}
+.cmdk-box{width:min(560px,100%);background:var(--surface);border:1px solid var(--rule);border-radius:14px;box-shadow:0 30px 80px -20px rgba(0,0,0,.45);overflow:hidden}
+.cmdk input{width:100%;border:0;border-bottom:1px solid var(--rule);background:transparent;color:var(--ink);font:400 16px/1 var(--f-body);padding:18px 20px;outline:none}
+.cmdk ul{list-style:none;margin:0;padding:8px;max-height:50vh;overflow:auto}
+.cmdk li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 12px;border-radius:8px;cursor:pointer;font-size:14.5px;color:var(--ink-2)}
+.cmdk li span:last-child{font:500 11px/1 var(--f-mono);color:var(--ink-3)}
+.cmdk li.sel{background:var(--accent-soft);color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--paper);padding:12px 16px;border-radius:10px;font:500 14px/1 var(--f-body);opacity:0;transition:all .25s;z-index:95;pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* reveal: visible at rest, gentle lift when JS + motion allowed */
+.js .rise{transition:transform .7s cubic-bezier(.2,.7,.2,1),opacity .7s}
+.js .rise.pre{transform:translateY(18px);opacity:.001}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .js .rise.pre{transform:none;opacity:1}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="mark" href="#top"><b>PD</b>Parth Dhawan</a>
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#skills">Skills</a>
+      <a href="#journey">Journey</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="tools">
+      <button class="icon-btn" id="cmdBtn" type="button" aria-label="Open quick menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <kbd>Ctrl K</kbd>
+      </button>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch light or dark theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <span class="status"><i></i>Open to data analyst roles · Panchkula, Haryana</span>
+      <h1>I find where the money <span class="leak">leaks.</span></h1>
+      <p class="lede">I'm Parth, a data analyst working in <strong>SQL, Python, Excel and Power BI</strong>. Every project I build starts with a business question and ends with a number a manager can act on: revenue lost, profit gained, or the volume needed to break even.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#work">See the four case files
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+        <button class="btn btn-ghost" type="button" data-copy-email>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Copy my email</button>
+      </div>
+      <details class="tldr">
+        <summary>The 30-second version for recruiters</summary>
+        <ul>
+          <li><strong>Role:</strong> entry-level Data Analyst / Business Analyst / Product Analyst.</li>
+          <li><strong>Tools:</strong> SQL (Databricks, MySQL), Python (pandas, scikit-learn), Excel modelling, Power BI and DAX.</li>
+          <li><strong>Proof:</strong> 4 end-to-end projects on public data, each with a written recommendation and a GitHub repo.</li>
+          <li><strong>Strengths:</strong> funnels and cohorts, A/B testing, unit economics, data quality checks.</li>
+          <li><strong>Background:</strong> B.Pharm (Chitkara University, 2025), now in Coding Ninjas' Data Analytics programme.</li>
+        </ul>
+      </details>
+      <div class="facts">
+        <div><b class="mono">20.7M</b><span>events queried in SQL</span></div>
+        <div><b class="mono">64,000</b><span>customers in one experiment</span></div>
+        <div><b class="mono">41/41</b><span>data quality checks passing</span></div>
+      </div>
+    </div>
+
+    <aside class="receipt" aria-label="Findings from my projects">
+      <button class="r-replay" type="button" id="replay" aria-label="Print the receipt again">reprint ↻</button>
+      <div class="r-head"><b>Findings ledger</b><span>Oct 2026</span></div>
+      <div class="r-line"><span class="q">Cart value left unbought<small>e-commerce · SQL</small></span><span class="v leak">$3.93M/mo</span></div>
+      <div class="r-line"><span class="q">Extra profit, best email plan<small>marketing · Python</small></span><span class="v gain">$131 / 1k</span></div>
+      <div class="r-line"><span class="q">Margin from +10% basket size<small>quick commerce · Excel</small></span><span class="v gain">₹85 cr/qtr</span></div>
+      <div class="r-line"><span class="q">Sales lost to 3 stock-outs<small>retail · Python pipeline</small></span><span class="v leak">€274K+</span></div>
+      <div class="r-foot"><span>4 questions</span><span>4 answers</span></div>
+      <div class="barcode" aria-hidden="true"></div>
+    </aside>
+  </div>
+</header>
+
+<main>
+<section id="approach">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <div><span class="label">How I work</span><h2>Business question first. Code second.</h2></div>
+      <p>Four rules I hold myself to on every project, so the numbers I hand over can be trusted and acted on.</p>
+    </div>
+    <div class="principles rise">
+      <div class="principle"><span class="glyph">? → $</span><h3>Start from a decision</h3><p>Each project answers one question a manager actually asks, and ends in money wherever the data allows.</p></div>
+      <div class="principle"><span class="glyph">=SUM()</span><h3>Code computes, I explain</h3><p>No number is typed by hand. Every figure traces back to a query, a notebook cell or a live formula.</p></div>
+      <div class="principle"><span class="glyph">41 ✓</span><h3>Check before reporting</h3><p>Profiling, cleaning and quality gates come before charts. A bad run never overwrites a good report.</p></div>
+      <div class="principle"><span class="glyph">±</span><h3>Say what's assumed</h3><p>Assumptions and limits are written next to the answer, and tested with sensitivity tables where they matter.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="work" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <div><span class="label">Selected work · 4 case files</span><h2>Push the models yourself.</h2></div>
+      <p>Each case file has a live model rebuilt from the project's own numbers. Move the sliders to see how the answer changes with the assumptions.</p>
+    </div>
+
+    <!-- A1 -->
+    <article class="case rise" id="cart">
+      <div class="case-top">
+        <div class="case-brief">
+          <div class="case-meta"><span class="chip domain">E-commerce</span><span class="chip">SQL</span><span class="chip">Databricks</span><span class="chip">Funnels · Cohorts</span></div>
+          <h3>Cart leakage and repeat cohorts</h3>
+          <dl class="qa">
+            <div><dt>Question</dt><dd>How much revenue leaks between add-to-cart and purchase, which categories cause it, and what is a cart-reminder nudge worth?</dd></div>
+            <div><dt>Answer</dt><dd><strong>About $3.93M of cart value goes unbought each month.</strong> Half of it sits in just 23 of 465 categories. A nudge recovering 10% is worth about $91K a month net.</dd></div>
+            <div><dt>Data</dt><dd>20.7M clickstream events from an online cosmetics store, Oct 2019 to Feb 2020.</dd></div>
+          </dl>
+          <div class="case-links">
+            <a class="link-btn" href="https://github.com/parthdhawan921-ops/cart-leakage-analysis" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5Z"/></svg>Code and memo</a>
+          </div>
+        </div>
+        <div class="case-kpis">
+          <div class="kpi"><b class="leak">76.5%</b><span>of 4.52M carts abandoned within 7 days</span></div>
+          <div class="kpi"><b>23 / 465</b><span>categories hold half the leak</span></div>
+          <div class="kpi"><b>9.2%</b><span>of new buyers come back the next month</span></div>
+          <div class="kpi"><b class="gain">~$91K</b><span>a month from a reminder at 10% recovery</span></div>
+        </div>
+      </div>
+      <div class="lab">
+        <div class="lab-head"><h4>Where the leak sits, and what a nudge is worth</h4><p>Model rebuilt from the project's assumptions</p></div>
+        <div class="lab-grid">
+          <div>
+            <span class="label">465 product categories, ranked by unbought value</span>
+            <div class="cells" id="cells" role="img" aria-label="465 categories. The first 23 hold 50% of abandoned value, the first 83 hold 80%."></div>
+            <div class="legend">
+              <span><i style="background:var(--leak)"></i>23 categories · 50% of leak</span>
+              <span><i style="background:color-mix(in srgb,var(--leak) 45%,var(--sunk))"></i>next 60 · up to 80%</span>
+              <span><i style="background:var(--sunk)"></i>other 382 · last 20%</span>
+            </div>
+            <div class="funnel">
+              <span class="label">What happened to 4.52M carts</span>
+              <div class="fbar"><div class="ab">3.46M abandoned</div><div class="bt">1.06M bought</div></div>
+            </div>
+          </div>
+          <div>
+            <div class="ctrl">
+              <div class="ctrl-top"><label for="a1r">Share of abandoned value the reminder wins back</label><output id="a1rO" class="mono">10%</output></div>
+              <input type="range" id="a1r" min="1" max="20" step="1" value="10">
+            </div>
+            <div class="ctrl">
+              <div class="ctrl-top"><label for="a1m">Gross margin on recovered sales</label><output id="a1mO" class="mono">25%</output></div>
+              <input type="range" id="a1m" min="10" max="50" step="1" value="25">
+            </div>
+            <div class="readout">
+              <div><b id="a1rev" class="mono">$393K</b><span>sales recovered / month</span></div>
+              <div><b id="a1net" class="mono pos">$91K</b><span>net profit / month</span></div>
+              <div><b id="a1yr" class="mono pos">$1.1M</b><span>net profit / year</span></div>
+              <div><b id="a1cost" class="mono">$6.9K</b><span>reminder cost / month</span></div>
+            </div>
+            <p class="note">Leak of $3.93M a month × recovery × margin, minus about 0.69M reminders a month at $0.01 each. Matches the project's figures: 5% → $42K, 10% → $91K, 15% → $140K. Recovery and margin are assumptions, so the memo recommends a holdout test to measure the real rate.</p>
+          </div>
+        </div>
+      </div>
+      <div class="case-bottom">
+        <div class="method"><span class="label">Method</span>
+          <ol>
+            <li>Loaded five monthly CSVs into Delta tables on Databricks.</li>
+            <li>Profiled and cleaned: removed duplicates and invalid prices (19.50M of 20.69M events kept).</li>
+            <li>Built the view → cart → purchase funnel by users and by sessions.</li>
+            <li>Defined an abandoned cart as no purchase of that product within 7 days, excluding the final 7 days of data.</li>
+            <li>Valued the leak by month, brand and category with a Pareto analysis.</li>
+            <li>Built first-purchase cohorts and priced the nudge from stated assumptions.</li>
+          </ol>
+        </div>
+        <div class="limits"><span class="label">Limits I flagged</span>
+          <ul>
+            <li>Recovery rate, margin and reminder cost are assumed, not measured.</li>
+            <li>40.1% of abandoned value has no brand recorded.</li>
+            <li>The October cohort looks inflated because the data starts that month.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- A2 -->
+    <article class="case rise" id="email">
+      <div class="case-top">
+        <div class="case-brief">
+          <div class="case-meta"><span class="chip domain">Marketing</span><span class="chip">Python</span><span class="chip">scikit-learn</span><span class="chip">A/B testing · Uplift</span></div>
+          <h3>Who should get the email?</h3>
+          <dl class="qa">
+            <div><dt>Question</dt><dd>Send the men's email, the women's email, or nothing, and to which customers, to make the most extra profit?</dd></div>
+            <div><dt>Answer</dt><dd><strong>Send the men's email to everyone, with a small holdout.</strong> It earns about $131 extra profit per 1,000 customers. A machine-learning targeting model earned less ($73) in every scenario tested.</dd></div>
+            <div><dt>Data</dt><dd>A public randomised email experiment with 64,000 customers.</dd></div>
+          </dl>
+          <div class="case-links">
+            <a class="link-btn" href="https://github.com/parthdhawan921-ops/email-uplift-targeting" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5Z"/></svg>Notebook</a>
+          </div>
+        </div>
+        <div class="case-kpis">
+          <div class="kpi"><b class="gain">+$0.77</b><span>spend per customer from the men's email (95% CI $0.50 to $1.07)</span></div>
+          <div class="kpi"><b>10.6→18.3%</b><span>site visit rate, no email vs men's email</span></div>
+          <div class="kpi"><b>22 / 38</b><span>segments still significant after Benjamini-Hochberg</span></div>
+          <div class="kpi"><b class="leak">−44%</b><span>profit if we had trusted the targeting model</span></div>
+        </div>
+      </div>
+      <div class="lab">
+        <div class="lab-head"><h4>Make the call first, then see the result</h4><p>30% margin, $0.10 per email</p></div>
+        <div class="lab-grid">
+          <div>
+            <span class="label">Which plan would you choose?</span>
+            <div class="quiz" id="quiz">
+              <button type="button" data-k="none">Email nobody<small>save the send cost</small></button>
+              <button type="button" data-k="women">Women's email to all<small>the softer offer</small></button>
+              <button type="button" data-k="model">Model-picked customers<small>uplift model, one by one</small></button>
+              <button type="button" data-k="men">Men's email to all<small>the stronger offer</small></button>
+            </div>
+            <div class="verdict" id="verdict" aria-live="polite">Pick one. Most people expect the model to win.</div>
+          </div>
+          <div>
+            <span class="label">Extra profit per 1,000 customers</span>
+            <svg class="chart" id="a2chart" viewBox="0 0 520 250" role="img" aria-label="Bar chart. Email nobody $0, women's email $27, uplift model $73, men's email $131 with 95% range $42 to $211."></svg>
+            <p class="note">Whisker on the men's email shows the 95% bootstrap range ($42 to $211). Targeting lost because the men's email lifts almost every kind of customer, and only about 0.9% buy within two weeks, so per-person predictions are noisy.</p>
+          </div>
+        </div>
+      </div>
+      <div class="case-bottom">
+        <div class="method"><span class="label">Method</span>
+          <ol>
+            <li>Checked the test was fair: sample-ratio test (chi-square 0.2) and a balance table with every gap under 0.01 SD.</li>
+            <li>Measured lift with t-tests and a 2,000-round bootstrap. Minimum detectable effect: $0.31 per customer.</li>
+            <li>Tested 38 segments with permutation p-values and Benjamini-Hochberg correction.</li>
+            <li>Trained a T-learner uplift model (gradient boosting, 5-fold CV) and checked it with a Qini curve.</li>
+            <li>Valued each policy with inverse-probability weighting and a margin × cost sensitivity table.</li>
+          </ol>
+        </div>
+        <div class="limits"><span class="label">Limits I flagged</span>
+          <ul>
+            <li>Only two weeks of outcomes after the send.</li>
+            <li>No unsubscribe or complaint data, so list fatigue is not priced in.</li>
+            <li>Margin and email cost are assumptions, tested in a sensitivity table.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- A4 -->
+    <article class="case rise" id="darkstore">
+      <div class="case-top">
+        <div class="case-brief">
+          <div class="case-meta"><span class="chip domain">Quick commerce</span><span class="chip">Excel</span><span class="chip">Unit economics</span><span class="chip">Scenarios</span></div>
+          <h3>Dark-store break-even model</h3>
+          <dl class="qa">
+            <div><dt>Question</dt><dd>How many orders a day does a quick-commerce dark store need to break even, and which lever moves it furthest?</dd></div>
+            <div><dt>Answer</dt><dd><strong>About 1,133 orders a day, 5.4% above today's ~1,075.</strong> Basket size is the strongest lever: +10% adds about ₹2.4 lakh per store per month, roughly ₹85 crore a quarter across 1,171 stores.</dd></div>
+            <div><dt>Data</dt><dd>Swiggy Instamart's Q1 FY27 shareholder letter and KPI databook (Apr to Jun 2026).</dd></div>
+          </dl>
+          <div class="case-links">
+            <a class="link-btn" href="https://github.com/parthdhawan921-ops/dark-store-breakeven-model" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5Z"/></svg>Workbook</a>
+          </div>
+        </div>
+        <div class="case-kpis">
+          <div class="kpi"><b>114.5M</b><span>orders in the quarter, ₹691 average order value</span></div>
+          <div class="kpi"><b>~1,133</b><span>orders per store per day to break even</span></div>
+          <div class="kpi"><b class="leak">−0.2%</b><span>contribution margin as disclosed</span></div>
+          <div class="kpi"><b class="gain">₹85 cr</b><span>per quarter from a 10% bigger basket</span></div>
+        </div>
+      </div>
+      <div class="lab">
+        <div class="lab-head"><h4>Run the store yourself</h4><p>Per store, per month · simplified from the Excel model</p></div>
+        <div class="seg" id="scen" role="group" aria-label="Scenarios">
+          <button type="button" aria-pressed="true" data-s="base">Base (as disclosed)</button>
+          <button type="button" aria-pressed="false" data-s="density">Density +30%</button>
+          <button type="button" aria-pressed="false" data-s="war">Discount war</button>
+          <button type="button" aria-pressed="false" data-s="pack">Lever pack</button>
+        </div>
+        <div class="lab-grid">
+          <div>
+            <div class="ctrl"><div class="ctrl-top"><label for="a4o">Orders per store per day</label><output id="a4oO" class="mono">1,075</output></div><input type="range" id="a4o" min="500" max="2600" step="5" value="1075"></div>
+            <div class="ctrl"><div class="ctrl-top"><label for="a4a">Average order value</label><output id="a4aO" class="mono">₹691</output></div><input type="range" id="a4a" min="550" max="850" step="1" value="691"></div>
+            <div class="ctrl"><div class="ctrl-top"><label for="a4r">Rider cost per order</label><output id="a4rO" class="mono">₹45</output></div><input type="range" id="a4r" min="30" max="60" step="1" value="45"></div>
+            <div class="ctrl"><div class="ctrl-top"><label for="a4d">Discount per order</label><output id="a4dO" class="mono">₹6</output></div><input type="range" id="a4d" min="0" max="25" step="1" value="6"></div>
+            <div class="ctrl"><div class="ctrl-top"><label for="a4ad">Ad income + fees per order</label><output id="a4adO" class="mono">₹22</output></div><input type="range" id="a4ad" min="10" max="40" step="1" value="22"></div>
+          </div>
+          <div>
+            <div class="readout">
+              <div><b id="a4be" class="mono">1,133</b><span>break-even orders / day</span></div>
+              <div><b id="a4m" class="mono neg">−0.2%</b><span>contribution margin</span></div>
+              <div><b id="a4c" class="mono neg">−₹0.45L</b><span>contribution / store / month</span></div>
+              <div><b id="a4u" class="mono">₹25.4</b><span>contribution per order</span></div>
+            </div>
+            <svg class="chart" id="a4chart" viewBox="0 0 520 230" style="margin-top:18px" role="img" aria-label="Line chart of monthly contribution per store against orders per day, with break-even point marked."></svg>
+          </div>
+        </div>
+        <p class="note">Fixed cost is calibrated so the model reproduces the disclosed −0.2% margin (about ₹8.6 lakh per store per month). Cost split, fees, ad income and discounts are my assumptions, not disclosures. Inputs move one at a time here; in reality basket size, volume and discounts affect each other. Discount war shows volume up and margin down, because every extra order carries a deeper discount.</p>
+      </div>
+      <div class="case-bottom">
+        <div class="method"><span class="label">Method</span>
+          <ol>
+            <li>Rebuilt the quarter per order and per store per day: ~1,074.5 orders, 15.6% take rate.</li>
+            <li>Split costs into variable (rider, picking, packaging, payment, wastage) and fixed (rent, staff, power).</li>
+            <li>Calibrated product margin to the disclosed ₹108 revenue per order, and fixed cost to the disclosed margin.</li>
+            <li>Break-even = fixed cost per day ÷ contribution per order (~₹25.42).</li>
+            <li>Built live sensitivity grids, four scenarios, a tornado chart and a Checks sheet that must read ALL PASS.</li>
+          </ol>
+        </div>
+        <div class="limits"><span class="label">Limits I flagged</span>
+          <ul>
+            <li>Public data gives only total cost, so the variable / fixed split is an assumption.</li>
+            <li>One quarter of company-wide averages; single stores will differ.</li>
+            <li>Benchmarked against the market leader only as a sanity check.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- NORDA -->
+    <article class="case rise" id="pipeline">
+      <div class="case-top">
+        <div class="case-brief">
+          <div class="case-meta"><span class="chip domain">Retail</span><span class="chip">Python</span><span class="chip">Claude Code</span><span class="chip">Power BI</span><span class="chip">Data quality</span></div>
+          <h3>One-command retail analytics pipeline</h3>
+          <dl class="qa">
+            <div><dt>Question</dt><dd>Can a messy monthly shop export become checked numbers, a dashboard, a deck and a Power BI model without manual work?</dd></div>
+            <div><dt>Answer</dt><dd><strong>Yes, in under 30 seconds, behind a 41-check quality gate.</strong> It also found that 3 top laptop models sold out on 14 Nov and were never restocked, costing about €274K to €442K in December.</dd></div>
+            <div><dt>Data</dt><dd>160,821 order lines from a practice European electronics retailer (LinkedIn Learning course).</dd></div>
+          </dl>
+          <div class="case-links">
+            <a class="link-btn" href="https://parthdhawan921-ops.github.io/norda-ai-analyst-system/reports/html/dashboard.html" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg>Live dashboard</a>
+            <a class="link-btn" href="https://github.com/parthdhawan921-ops/norda-ai-analyst-system" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5Z"/></svg>Code</a>
+          </div>
+        </div>
+        <div class="case-kpis">
+          <div class="kpi"><b>€33.51M</b><span>2025 revenue across 101,142 orders</span></div>
+          <div class="kpi"><b>3,997</b><span>exact duplicate lines removed and kept for audit</span></div>
+          <div class="kpi"><b class="gain">41 / 41</b><span>quality checks pass before any report is built</span></div>
+          <div class="kpi"><b class="leak">€274K+</b><span>December sales lost to 3 stock-outs</span></div>
+        </div>
+      </div>
+      <div class="lab">
+        <div class="lab-head"><h4>Watch a run</h4><button class="btn btn-primary" type="button" id="runBtn" style="height:38px;font-size:14px">▶ Run pipeline</button></div>
+        <div class="pipe" id="pipe">
+          <div class="stage done"><span class="tick"><svg viewBox="0 0 12 12" fill="none" stroke-width="2"><path d="m2 6 3 3 5-6"/></svg></span><span class="label">Raw</span><h5>Shop export</h5><p>160,821 order lines, never edited</p></div>
+          <div class="stage done"><span class="tick"><svg viewBox="0 0 12 12" fill="none" stroke-width="2"><path d="m2 6 3 3 5-6"/></svg></span><span class="label">/profile</span><h5>Profile</h5><p>mixed dates, DE vs Germany, empty column</p></div>
+          <div class="stage done"><span class="tick"><svg viewBox="0 0 12 12" fill="none" stroke-width="2"><path d="m2 6 3 3 5-6"/></svg></span><span class="label">/clean</span><h5>Clean</h5><p>16 brand spellings → 6, 15 categories → 5</p></div>
+          <div class="stage done"><span class="tick"><svg viewBox="0 0 12 12" fill="none" stroke-width="2"><path d="m2 6 3 3 5-6"/></svg></span><span class="label">/mart</span><h5>Star schema</h5><p>4 dimensions, 2 fact tables</p></div>
+          <div class="stage done"><span class="tick"><svg viewBox="0 0 12 12" fill="none" stroke-width="2"><path d="m2 6 3 3 5-6"/></svg></span><span class="label">/quality-gate</span><h5>Quality gate</h5><p>41 checks, stops on any failure</p></div>
+          <div class="stage done"><span class="tick"><svg viewBox="0 0 12 12" fill="none" stroke-width="2"><path d="m2 6 3 3 5-6"/></svg></span><span class="label">reports</span><h5>Outputs</h5><p>dashboard, slide deck, Power BI model</p></div>
+        </div>
+        <div class="gate" id="gate" aria-label="41 of 41 quality checks passed"></div>
+        <div class="term" id="term" aria-live="polite"></div>
+      </div>
+      <div class="case-bottom">
+        <div class="method"><span class="label">Design rules I wrote for it</span>
+          <ol>
+            <li>Code computes, the AI only explains. Every number comes from a script.</li>
+            <li>I own the definitions: metrics and quality rules are written in plain text and the AI must follow them.</li>
+            <li>Trust layer before reports: a failed check stops the run, and a bad run never overwrites a good dashboard.</li>
+            <li>If a task repeats, it becomes a reusable skill (9 so far).</li>
+          </ol>
+        </div>
+        <div class="limits"><span class="label">Problems it found in the data</span>
+          <ul>
+            <li>Two markets (Spain, Austria, 13% of revenue) missing from the company docs.</li>
+            <li>Dates in two formats and stock months without leading zeros.</li>
+            <li>Built on course practice data, so the business is fictional; the method is real.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="skills" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <div><span class="label">Skills, with receipts</span><h2>Every skill points to proof.</h2></div>
+      <p>No progress bars or self-ratings. Each row shows where I actually used the skill. Filter by tool or click a project to jump to it.</p>
+    </div>
+    <div class="mfilter seg" id="mfilter" role="group" aria-label="Filter skills">
+      <button type="button" aria-pressed="true" data-f="all">All</button>
+      <button type="button" aria-pressed="false" data-f="sql">SQL</button>
+      <button type="button" aria-pressed="false" data-f="py">Python</button>
+      <button type="button" aria-pressed="false" data-f="xl">Excel</button>
+      <button type="button" aria-pressed="false" data-f="bi">Power BI</button>
+      <button type="button" aria-pressed="false" data-f="biz">Business</button>
+    </div>
+    <div class="matrix-wrap rise">
+      <table class="matrix" id="matrix">
+        <thead><tr>
+          <th scope="col" style="text-align:left">Skill</th>
+          <th scope="col"><a href="#cart">E-commerce<b>Cart leakage</b></a></th>
+          <th scope="col"><a href="#email">Marketing<b>Email uplift</b></a></th>
+          <th scope="col"><a href="#darkstore">Quick commerce<b>Break-even</b></a></th>
+          <th scope="col"><a href="#pipeline">Retail<b>Pipeline</b></a></th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="legend" style="margin-top:14px"><span><span class="dot"></span>core of the project</span><span><span class="dot lite"></span>used along the way</span></div>
+  </div>
+</section>
+
+<section id="journey" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <div><span class="label">Journey</span><h2>From pharmacy to analytics.</h2></div>
+      <p>Pharmacy trained me to work carefully with evidence, dosage and error margins. Analytics lets me apply the same care to business decisions.</p>
+    </div>
+    <div class="journey-grid">
+      <div class="timeline rise">
+        <div class="t-item now"><span class="when">Oct 2026</span><div><h3>Four end-to-end case studies</h3><p>Cart leakage in SQL, email uplift in Python, dark-store unit economics in Excel, and an automated retail pipeline with Power BI. Each one has a memo, a repo and stated limits.</p></div></div>
+        <div class="t-item"><span class="when">Sep 2026</span><div><h3>LinkedIn Learning and Anthropic Academy</h3><p>Claude Code for Data Analysis: Build Repeatable, Reliable Workflows. Databricks for Data Analysts. Claude 101.</p>
+          <div class="creds">
+            <a href="https://www.linkedin.com/learning/certificates/2bd727026ffd6db14dac3f41441033c25ed47eb6114cf839b6d5833cffcb6355" target="_blank" rel="noopener">LinkedIn Learning ↗</a>
+            <a href="https://www.linkedin.com/learning/certificates/7e3148123c0c09e43cced77c86ea1243baa184d189e5324beaba8fb48046c7e8" target="_blank" rel="noopener">LinkedIn Learning ↗</a>
+            <a href="https://verify.skilljar.com/c/c6agvhojnz67" target="_blank" rel="noopener">Anthropic Academy ↗</a>
+          </div></div></div>
+        <div class="t-item"><span class="when">2025 – now</span><div><h3>Coding Ninjas</h3><p>Advanced Certification in Data Analytics with Generative AI: analytics and Excel, SQL for data analysis, data visualisation with Power BI.</p>
+          <div class="creds">
+            <a href="https://certificate.codingninjas.com/view/36d4f3186b2fbaeb" target="_blank" rel="noopener">Certificate ↗</a>
+            <a href="https://certificate.codingninjas.com/view/2d5adb57bb0068ce" target="_blank" rel="noopener">Certificate ↗</a>
+            <a href="https://certificate.codingninjas.com/view/d17a87378a3ec6c8" target="_blank" rel="noopener">Certificate ↗</a>
+            <a href="https://certificate.codingninjas.com/view/f1dd441adfcd37b7" target="_blank" rel="noopener">Certificate ↗</a>
+          </div></div></div>
+        <div class="t-item"><span class="when">2021 – 2025</span><div><h3>Bachelor of Pharmacy</h3><p>Chitkara University, Himachal Pradesh. CGPA 7.21 / 10.</p></div></div>
+      </div>
+      <aside class="toolbox rise">
+        <h3>Toolbox</h3>
+        <div class="tool-group"><span class="label">Query and model</span><p>SQL (CTEs, window functions, joins), MySQL, Databricks, star schemas, ETL</p></div>
+        <div class="tool-group"><span class="label">Analyse</span><p>Python: pandas, NumPy, scikit-learn, Matplotlib, Seaborn. Hypothesis testing, bootstrap, uplift modelling</p></div>
+        <div class="tool-group"><span class="label">Model money</span><p>Excel: live formulas, sensitivity grids, scenarios, tornado charts. Unit economics, GMV, AOV</p></div>
+        <div class="tool-group"><span class="label">Report</span><p>Power BI, DAX, Power Query, Tableau, KPI dashboards, decision memos</p></div>
+        <div class="tool-group"><span class="label">Work</span><p>GitHub, Jupyter, Claude Code for repeatable workflows</p></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="padding-top:0">
+  <div class="wrap">
+    <div class="contact rise">
+      <span class="label" style="color:var(--deep-2)">Contact</span>
+      <h2>Have a question your data should answer?</h2>
+      <p>I'm looking for entry-level data analyst roles. I'd be glad to walk you through any of these projects, query by query.</p>
+      <div class="contact-row">
+        <div class="email-box"><span id="emailText">parthdhawan921@gmail.com</span><button type="button" data-copy-email>Copy</button></div>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/parth-dhawan-31516127a/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn btn-ghost" href="https://github.com/parthdhawan921-ops" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><span>© 2026 Parth Dhawan</span><span>Every figure on this page comes from my project repos.</span></div></footer>
+
+<div class="cmdk" id="cmdk" hidden>
+  <div class="cmdk-box" role="dialog" aria-modal="true" aria-label="Quick menu">
+    <input id="cmdkInput" type="text" placeholder="Jump to a project, copy email, switch theme…" autocomplete="off" aria-label="Search actions">
+    <ul id="cmdkList" role="listbox"></ul>
+  </div>
+</div>
+<div class="tip" id="tip" role="tooltip"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  var $ = function(s,r){return (r||document).querySelector(s)};
+  var $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var NS = 'http://www.w3.org/2000/svg';
+  function el(tag, attrs, parent){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
+  function fmtUSD(v){var a=Math.abs(v),s=v<0?'−':'';if(a>=1e6)return s+'$'+(a/1e6).toFixed(2).replace(/\.?0+$/,'')+'M';if(a>=1e3)return s+'$'+(a>=1e5?Math.round(a/1e3):(a/1e3).toFixed(1).replace(/\.0$/,''))+'K';return s+'$'+Math.round(a)}
+  function fmtInt(v){return Math.round(v).toLocaleString('en-IN')}
+  function fill(r){var p=(r.value-r.min)/(r.max-r.min)*100;r.style.setProperty('--p',p+'%')}
+
+  /* toast + copy */
+  var toast=$('#toast'),tt;
+  function say(msg){toast.textContent=msg;toast.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove('on')},2200)}
+  var EMAIL='parthdhawan921@gmail.com';
+  function copyEmail(){
+    function fallback(){var r=document.createRange();r.selectNodeContents($('#emailText'));var s=window.getSelection();s.removeAllRanges();s.addRange(r);$('#emailText').scrollIntoView({block:'center'});say('Email selected. Press Ctrl+C to copy')}
+    try{navigator.clipboard.writeText(EMAIL).then(function(){say('Email copied: '+EMAIL)},fallback)}catch(e){fallback()}
+  }
+  $$('[data-copy-email]').forEach(function(b){b.addEventListener('click',copyEmail)});
+
+  /* theme */
+  var root=document.documentElement;
+  try{var saved=localStorage.getItem('pd-theme');if(saved)root.setAttribute('data-theme',saved)}catch(e){}
+  function isDark(){var t=root.getAttribute('data-theme');return t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches}
+  function toggleTheme(){var n=isDark()?'light':'dark';root.setAttribute('data-theme',n);try{localStorage.setItem('pd-theme',n)}catch(e){}say(n==='dark'?'Dark theme on':'Light theme on')}
+  $('#themeBtn').addEventListener('click',toggleTheme);
+
+  /* nav state */
+  var nav=$('#nav');
+  window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>8)},{passive:true});
+  if('IntersectionObserver' in window){
+    var links=$$('.nav-links a');
+    var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id)})}})},{rootMargin:'-45% 0px -50% 0px'});
+    ['work','skills','journey','contact'].forEach(function(id){so.observe(document.getElementById(id))});
+  }
+
+  /* reveal (content stays visible without JS / reduced motion) */
+  if(!reduce && 'IntersectionObserver' in window){
+    var vh=window.innerHeight;
+    var ro=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.remove('pre');ro.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
+    $$('.rise').forEach(function(n){if(n.getBoundingClientRect().top>vh){n.classList.add('pre');ro.observe(n)}});
+  }
+
+  /* receipt printing */
+  function printReceipt(){
+    var lines=$$('.receipt .r-line, .receipt .r-foot');
+    lines.forEach(function(l){l.classList.remove('printing');l.style.animationDelay=''});
+    if(reduce)return;
+    void document.body.offsetWidth;
+    lines.forEach(function(l,i){l.style.animationDelay=(0.25+i*0.32)+'s';l.classList.add('printing')});
+  }
+  printReceipt();
+  $('#replay').addEventListener('click',printReceipt);
+
+  /* tooltip */
+  var tip=$('#tip');
+  function showTip(html,x,y){tip.innerHTML=html;tip.style.left=x+'px';tip.style.top=y+'px';tip.classList.add('on')}
+  function hideTip(){tip.classList.remove('on')}
+
+  /* ---------- A1 ---------- */
+  var cells=$('#cells');
+  for(var i=0;i<465;i++){var c=document.createElement('i');c.className=i<23?'c50':(i<83?'c80':'');cells.appendChild(c)}
+  var LEAK=3.93e6, REMINDERS=0.692e6, PER=0.01;
+  var a1r=$('#a1r'),a1m=$('#a1m');
+  function a1(){
+    var r=a1r.value/100,m=a1m.value/100,cost=REMINDERS*PER,rev=LEAK*r,net=rev*m-cost;
+    $('#a1rO').textContent=a1r.value+'%';$('#a1mO').textContent=a1m.value+'%';
+    $('#a1rev').textContent=fmtUSD(rev);
+    var n=$('#a1net');n.textContent=fmtUSD(net);n.className='mono '+(net>=0?'pos':'neg');
+    var y=$('#a1yr');y.textContent=fmtUSD(net*12);y.className='mono '+(net>=0?'pos':'neg');
+    $('#a1cost').textContent=fmtUSD(cost);
+    fill(a1r);fill(a1m);
+  }
+  [a1r,a1m].forEach(function(x){x.addEventListener('input',a1)});a1();
+
+  /* ---------- A2 ---------- */
+  var A2=[{k:'none',n:'Email nobody',v:0},{k:'women',n:"Women's email to all",v:27},{k:'model',n:'Uplift model targeting',v:73},{k:'men',n:"Men's email to all",v:131,lo:42,hi:211}];
+  var svg2=$('#a2chart');
+  function drawA2(pick){
+    svg2.innerHTML='';
+    var L=170,R=500,T=14,bh=30,gap=22,max=220;
+    function x(v){return L+(R-L)*v/max}
+    [0,50,100,150,200].forEach(function(t){el('line',{x1:x(t),x2:x(t),y1:T-4,y2:T+4*(bh+gap)-gap+4,class:t?'grid':'axis'},svg2);var tx=el('text',{x:x(t),y:T+4*(bh+gap)-gap+22,'text-anchor':'middle'},svg2);tx.textContent='$'+t});
+    A2.forEach(function(d,i){
+      var y=T+i*(bh+gap),best=d.k==='men',sel=pick===d.k;
+      var lab=el('text',{x:L-12,y:y+bh/2+4,'text-anchor':'end',class:sel||best?'lbl-ink':''},svg2);lab.textContent=d.n;
+      lab.setAttribute('style','font-family:var(--f-body);font-size:13px'+(sel?';font-weight:600':''));
+      var w=Math.max(x(d.v)-L,d.v?0:2);
+      var col=best?'var(--gain)':(d.k==='model'?'var(--accent)':'var(--ink-3)');
+      var bar=el('rect',{x:L,y:y,width:reduce?w:0,height:bh,rx:4,fill:col,opacity:pick&&!sel&&!best?.45:1},svg2);
+      if(!reduce){bar.style.transition='width .7s cubic-bezier(.2,.7,.2,1) '+(i*80)+'ms';requestAnimationFrame(function(){requestAnimationFrame(function(){bar.setAttribute('width',w)})})}
+      if(d.hi){el('line',{x1:x(d.lo),x2:x(d.hi),y1:y+bh/2,y2:y+bh/2,stroke:'var(--ink)','stroke-width':1.5},svg2);[d.lo,d.hi].forEach(function(v){el('line',{x1:x(v),x2:x(v),y1:y+bh/2-7,y2:y+bh/2+7,stroke:'var(--ink)','stroke-width':1.5},svg2)})}
+      var vt=el('text',{x:d.hi?x(d.hi)+8:x(d.v)+8,y:y+bh/2+4,class:'lbl-ink'},svg2);vt.textContent='$'+d.v;vt.setAttribute('style','font-size:12.5px;font-weight:500');
+      var hit=el('rect',{x:0,y:y-gap/2,width:520,height:bh+gap,fill:'transparent'},svg2);
+      hit.addEventListener('mousemove',function(e){showTip(d.n+'<br>$'+d.v+' extra profit per 1,000'+(d.hi?'<br>95% range $'+d.lo+' to $'+d.hi:''),e.clientX,e.clientY)});
+      hit.addEventListener('mouseleave',hideTip);
+    });
+  }
+  drawA2(null);
+  var V={none:"<strong>You'd leave money on the table.</strong> The men's email lifts spend by $0.77 a customer, well above the $0.10 send cost.",
+         women:"<strong>Profitable, but not the best.</strong> The women's email earns $27 per 1,000. The men's email earns about 5× more.",
+         model:"<strong>The tempting answer, and the wrong one here.</strong> The model earned $73 vs $131: the men's email lifts almost everyone, so there is little to gain by skipping people.",
+         men:"<strong>Correct.</strong> $131 per 1,000 customers, best in every margin and cost scenario. Keep a small holdout to keep measuring."};
+  $$('#quiz button').forEach(function(b){b.addEventListener('click',function(){
+    var k=b.dataset.k;$$('#quiz button').forEach(function(o){o.classList.remove('right','wrong')});
+    b.classList.add(k==='men'?'right':'wrong');if(k!=='men')$('#quiz [data-k="men"]').classList.add('right');
+    $('#verdict').innerHTML=V[k];drawA2(k);
+  })});
+
+  /* ---------- A4 ---------- */
+  var BASE={o:1075,a:691,r:45,d:6,ad:22};
+  var C0=25.42, K_AOV=0.1077, F=28810; /* fixed cost per store per day, calibrated to −0.2% margin */
+  var S={base:BASE,density:{o:1398,a:691,r:45,d:6,ad:22},war:{o:1183,a:691,r:45,d:16,ad:22},pack:{o:1075,a:751,r:42,d:6,ad:30}};
+  var ids={o:'a4o',a:'a4a',r:'a4r',d:'a4d',ad:'a4ad'};
+  function unit(v){return C0+K_AOV*(v.a-BASE.a)-(v.r-BASE.r)-(v.d-BASE.d)+(v.ad-BASE.ad)}
+  var svg4=$('#a4chart');
+  function lakh(v){var s=v<0?'−':'+';return s+'₹'+Math.abs(v/1e5).toFixed(2)+'L'}
+  function readA4(){var v={};for(var k in ids)v[k]=+$('#'+ids[k]).value;return v}
+  function a4(){
+    var v=readA4(),u=unit(v),mon=(u*v.o-F)*30,gov=v.a*v.o*30,mg=mon/gov*100,be=u>0?F/u:Infinity;
+    $('#a4oO').textContent=fmtInt(v.o);$('#a4aO').textContent='₹'+v.a;$('#a4rO').textContent='₹'+v.r;$('#a4dO').textContent='₹'+v.d;$('#a4adO').textContent='₹'+v.ad;
+    $('#a4be').textContent=isFinite(be)?fmtInt(be):'never';
+    var m=$('#a4m');m.textContent=(mg>=0?'+':'−')+Math.abs(mg).toFixed(1)+'%';m.className='mono '+(mg>=0?'pos':'neg');
+    var c=$('#a4c');c.textContent=lakh(mon);c.className='mono '+(mon>=0?'pos':'neg');
+    $('#a4u').textContent='₹'+u.toFixed(1);
+    for(var k in ids)fill($('#'+ids[k]));
+    drawA4(v,u,be);
+  }
+  function drawA4(v,u,be){
+    svg4.innerHTML='';
+    var L=52,R=505,T=12,B=195,x0=500,x1=2600,y0=-6,y1=10; /* lakh */
+    function X(o){return L+(R-L)*(o-x0)/(x1-x0)}
+    function Y(l){return T+(B-T)*(1-(l-y0)/(y1-y0))}
+    [-5,0,5,10].forEach(function(t){el('line',{x1:L,x2:R,y1:Y(t),y2:Y(t),class:t===0?'axis':'grid'},svg4);var tx=el('text',{x:L-8,y:Y(t)+4,'text-anchor':'end'},svg4);tx.textContent=(t>0?'+':t<0?'−':'')+'₹'+Math.abs(t)+'L'});
+    [500,1000,1500,2000,2500].forEach(function(t){var tx=el('text',{x:X(t),y:B+20,'text-anchor':'middle'},svg4);tx.textContent=t.toLocaleString('en-IN')});
+    var tx=el('text',{x:R,y:B+20,'text-anchor':'end'},svg4);tx.textContent='';
+    function mon(o){return (u*o-F)*30/1e5}
+    function clampY(l){return Math.max(y0,Math.min(y1,l))}
+    /* area split at zero */
+    var pts=[];for(var o=x0;o<=x1;o+=20)pts.push([X(o),Y(mon(o))]);
+    var zero=Y(0);
+    var d='M'+pts[0][0]+','+zero+' '+pts.map(function(p){return 'L'+p[0]+','+p[1]}).join(' ')+' L'+pts[pts.length-1][0]+','+zero+'Z';
+    var defs=el('defs',{},svg4);var cpp=el('clipPath',{id:'plot'},defs);el('rect',{x:L,y:T,width:R-L,height:B-T},cpp);var gp=el('g',{'clip-path':'url(#plot)'},svg4);var cp1=el('clipPath',{id:'above'},defs);el('rect',{x:L,y:T,width:R-L,height:zero-T},cp1);var cp2=el('clipPath',{id:'below'},defs);el('rect',{x:L,y:zero,width:R-L,height:B-zero},cp2);
+    var g1=el('g',{'clip-path':'url(#above)'},gp);el('path',{d:d,fill:'var(--gain)',opacity:.14},g1);
+    var g2=el('g',{'clip-path':'url(#below)'},gp);el('path',{d:d,fill:'var(--leak)',opacity:.14},g2);
+    el('path',{d:'M'+pts.map(function(p){return p.join(',')}).join(' L'),fill:'none',stroke:'var(--ink)','stroke-width':2,'stroke-linejoin':'round'},gp);
+    if(isFinite(be)&&be>=x0&&be<=x1){
+      el('line',{x1:X(be),x2:X(be),y1:T,y2:B,stroke:'var(--ink-3)','stroke-dasharray':'3 3'},svg4);
+      var bt=el('text',{x:X(be)+(X(be)>R-110?-6:6),y:T+12,'text-anchor':X(be)>R-110?'end':'start',class:'lbl-ink'},svg4);bt.textContent='break-even '+fmtInt(be)+'/day';
+    }
+    var cy=Y(clampY(mon(v.o)));
+    el('circle',{cx:X(v.o),cy:cy,r:7,fill:mon(v.o)>=0?'var(--gain)':'var(--leak)',stroke:'var(--surface)','stroke-width':2.5},svg4);
+    var lt=el('text',{x:X(v.o)+(X(v.o)>R-90?-12:12),y:cy+(cy>B-20?-10:-10),'text-anchor':X(v.o)>R-90?'end':'start',class:'lbl-ink'},svg4);lt.textContent='you: '+fmtInt(v.o)+'/day';
+    var xl=el('text',{x:(L+R)/2,y:B+34,'text-anchor':'middle'},svg4);xl.textContent='orders per store per day';
+    svg4.setAttribute('viewBox','0 0 520 236');
+    var hit=el('rect',{x:L,y:T,width:R-L,height:B-T,fill:'transparent'},svg4);
+    hit.addEventListener('mousemove',function(e){var b=svg4.getBoundingClientRect();var ox=(e.clientX-b.left)/b.width*520;var o=x0+(ox-L)/(R-L)*(x1-x0);o=Math.max(x0,Math.min(x1,o));var mv=mon(o);showTip(fmtInt(o)+' orders/day<br>'+(mv>=0?'+':'−')+'₹'+Math.abs(mv).toFixed(2)+' lakh / month',e.clientX,e.clientY)});
+    hit.addEventListener('mouseleave',hideTip);
+  }
+  function setScen(name){var s=S[name];for(var k in ids)$('#'+ids[k]).value=s[k];$$('#scen button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.s===name)});a4()}
+  $$('#scen button').forEach(function(b){b.addEventListener('click',function(){setScen(b.dataset.s)})});
+  for(var k in ids)$('#'+ids[k]).addEventListener('input',function(){$$('#scen button').forEach(function(b){b.setAttribute('aria-pressed','false')});a4()});
+  a4();
+
+  /* ---------- Pipeline ---------- */
+  var gate=$('#gate');for(var g=0;g<41;g++)gate.appendChild(document.createElement('i'));
+  var term=$('#term');
+  var LOG=[
+    ['<span class="p">$</span> python run_pipeline.py --steps all'],
+    ['[raw]      orders.csv · 160,821 lines loaded'],
+    ['[profile]  <span class="warn">! 2 date formats · DE/Germany mixed · 1 empty column</span>'],
+    ['[clean]    3,997 exact duplicates removed (kept in removed/)'],
+    ['[clean]    brands 16 → 6 · categories 15 → 5'],
+    ['[mart]     star schema built · 4 dims · 2 facts'],
+    ['[gate]     <span class="ok">41/41 checks passed</span>'],
+    ['[report]   dashboard · slides · Power BI refreshed'],
+    ['<span class="ok">done</span> · revenue €33.51M · Dec stock-out loss €274K–€442K']
+  ];
+  function renderLog(n){term.innerHTML=LOG.slice(0,n).map(function(l){return '<div>'+l[0]+'</div>'}).join('')}
+  renderLog(LOG.length);
+  var running=false;
+  $('#runBtn').addEventListener('click',function(){
+    if(running)return;running=true;
+    var st=$$('#pipe .stage'),gi=$$('#gate i');
+    st.forEach(function(s){s.classList.remove('done','run')});gi.forEach(function(i){i.classList.add('off')});renderLog(1);
+    var plan=[[0,1],[1,2],[2,4],[3,5],[4,6],[5,8]],step=0,speed=reduce?60:520;
+    function next(){
+      if(step>=plan.length){renderLog(LOG.length);running=false;say('Pipeline finished: 41/41 checks passed');return}
+      var p=plan[step];st[p[0]].classList.add('run');
+      setTimeout(function(){
+        if(p[0]===4){var j=0;(function tick(){if(j<41){gi[j].classList.remove('off');j++;setTimeout(tick,reduce?0:18)}else{fin()}})()}else fin();
+        function fin(){st[p[0]].classList.remove('run');st[p[0]].classList.add('done');renderLog(p[1]);step++;next()}
+      },speed);
+    }
+    next();
+  });
+
+  /* ---------- Skills matrix ---------- */
+  /* values: 2 = core, 1 = used, 0 = not used. Columns: cart, email, darkstore, pipeline */
+  var SK=[
+    ['SQL: CTEs, window functions, joins','Databricks SQL','sql',[2,0,0,1]],
+    ['Funnel and cohort analysis','retention, Pareto','biz',[2,0,0,0]],
+    ['Data cleaning and profiling','duplicates, bad values','py',[1,0,0,2]],
+    ['Python: pandas, NumPy','notebooks, scripts','py',[0,2,0,2]],
+    ['A/B testing and statistics','bootstrap, BH correction','py',[1,2,0,0]],
+    ['Machine learning (uplift)','scikit-learn, Qini','py',[0,2,0,0]],
+    ['Excel financial modelling','sensitivity, scenarios','xl',[0,0,2,0]],
+    ['Unit economics','AOV, GMV, contribution','biz',[1,1,2,0]],
+    ['Data modelling','star schema, facts, dims','sql',[0,0,0,2]],
+    ['Power BI and DAX','measures, relationships','bi',[0,0,0,2]],
+    ['Dashboards and charts','KPIs, visuals','bi',[1,1,1,2]],
+    ['Business recommendation','memo, money impact','biz',[2,2,2,2]],
+    ['Workflow automation','Claude Code skills','py',[0,0,0,2]]
+  ];
+  var tb=$('#matrix tbody');
+  SK.forEach(function(s){
+    var tr=document.createElement('tr');tr.dataset.f=s[2];
+    tr.innerHTML='<th scope="row">'+s[0]+'<small>'+s[1]+'</small></th>'+s[3].map(function(v){return v?'<td><span class="dot'+(v===1?' lite':'')+'" aria-label="'+(v===2?'core':'used')+'"></span></td>':'<td class="none" aria-label="not used"></td>'}).join('');
+    tr.addEventListener('click',function(){var on=tr.classList.contains('on');$$('#matrix tbody tr').forEach(function(r){r.classList.remove('on')});if(!on)tr.classList.add('on')});
+    tb.appendChild(tr);
+  });
+  $$('#mfilter button').forEach(function(b){b.addEventListener('click',function(){
+    var f=b.dataset.f;$$('#mfilter button').forEach(function(o){o.setAttribute('aria-pressed',o===b)});
+    $$('#matrix tbody tr').forEach(function(r){r.hidden=!(f==='all'||r.dataset.f===f)});
+  })});
+
+  /* ---------- Command palette ---------- */
+  var cmdk=$('#cmdk'),ci=$('#cmdkInput'),cl=$('#cmdkList'),sel=0,shown=[];
+  function go(id){return function(){document.getElementById(id).scrollIntoView({behavior:reduce?'auto':'smooth'})}}
+  function open(u){return function(){var a=document.createElement('a');a.href=u;a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove()}}
+  var ACT=[
+    ['Cart leakage case file','SQL',go('cart')],
+    ['Email uplift case file','Python',go('email')],
+    ['Dark-store break-even case file','Excel',go('darkstore')],
+    ['Retail pipeline case file','Power BI',go('pipeline')],
+    ['Skills matrix','section',go('skills')],
+    ['Journey and certificates','section',go('journey')],
+    ['Copy email address','action',copyEmail],
+    ['Switch light / dark theme','action',toggleTheme],
+    ['Open GitHub profile','link',open('https://github.com/parthdhawan921-ops')],
+    ['Open LinkedIn profile','link',open('https://www.linkedin.com/in/parth-dhawan-31516127a/')],
+    ['Open live retail dashboard','link',open('https://parthdhawan921-ops.github.io/norda-ai-analyst-system/reports/html/dashboard.html')]
+  ];
+  function renderCmd(){
+    var q=ci.value.toLowerCase().trim();
+    shown=ACT.filter(function(a){return !q||(a[0]+' '+a[1]).toLowerCase().indexOf(q)>-1});
+    if(sel>=shown.length)sel=0;
+    cl.innerHTML=shown.length?shown.map(function(a,i){return '<li role="option" data-i="'+i+'" class="'+(i===sel?'sel':'')+'" aria-selected="'+(i===sel)+'"><span>'+a[0]+'</span><span>'+a[1]+'</span></li>'}).join(''):'<li><span>No match. Try "excel" or "email".</span></li>';
+  }
+  function openCmd(){cmdk.hidden=false;ci.value='';sel=0;renderCmd();ci.focus()}
+  function closeCmd(){cmdk.hidden=true}
+  function run(i){var a=shown[i];if(!a)return;closeCmd();a[2]()}
+  $('#cmdBtn').addEventListener('click',openCmd);
+  cmdk.addEventListener('click',function(e){if(e.target===cmdk)closeCmd()});
+  cl.addEventListener('click',function(e){var li=e.target.closest('li[data-i]');if(li)run(+li.dataset.i)});
+  ci.addEventListener('input',function(){sel=0;renderCmd()});
+  document.addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();cmdk.hidden?openCmd():closeCmd();return}
+    if(cmdk.hidden)return;
+    if(e.key==='Escape')closeCmd();
+    else if(e.key==='ArrowDown'){e.preventDefault();sel=(sel+1)%Math.max(shown.length,1);renderCmd()}
+    else if(e.key==='ArrowUp'){e.preventDefault();sel=(sel-1+shown.length)%Math.max(shown.length,1);renderCmd()}
+    else if(e.key==='Enter'){e.preventDefault();run(sel)}
+  });
+  if(/Mac|iPhone|iPad/.test(navigator.platform))$('#cmdBtn kbd').textContent='⌘K';
+})();
+</script>
+</body>
+</html>
