@@ -1,33 +1,38 @@
 # Parth Dhawan · Data Analyst portfolio
 
-An interactive résumé website. One file (`index.html`), no build step, no frameworks.
+An interactive résumé website. One file (`index.html`) plus a photo, with no build step and no frameworks.
+
+**How it works**
+- A recruiter picks the role they are hiring for: **Data / BI**, **Business / Ops**, **Product / Growth** or **Finance / Research**.
+- The page rebuilds around that role: the headline, the "findings ledger" receipt, the order of the four featured projects, the skills table and the resume view.
+- Each role has its own link, so every resume can point straight to its matching version of the site:
+  - `…/#data` · `…/#business` · `…/#product` · `…/#finance`
+- Each project also has its own link that opens its case file directly, e.g. `…/#cart` or `…/#sqlwh`.
 
 **What's on it**
-- A "findings ledger" receipt in the hero with the headline result of each project
-- Four case files (cart leakage, email uplift, dark-store break-even, retail pipeline), each with
-  question → answer → a live model you can play with → method → limits → links
-- A skills matrix that links every skill to the project that proves it
-- Journey and certificates, contact with one-click email copy
-- Light / dark theme, and a quick menu (Ctrl K / ⌘K)
+- 8 projects, each with question → answer → headline numbers → a live model you can play with → what I caught → method → limits → GitHub link
+- "Mistakes I caught before they reached a report": real data problems found and fixed across the projects
+- A skills table that links every skill to the project that proves it
+- A role-tailored, one-page resume view (Save as PDF on the live site)
+- About (pharmacy to analytics), certificates, and contact details with one-click copy
+- Light and dark themes, a quick menu (Ctrl K / ⌘K), and keyboard shortcuts 1–4 to switch roles
 
-Every number comes from the project repos. The live models are simplified rebuilds of each
-project's own calculations and reproduce its published figures.
+Every number comes from the project repos. The live models are simplified rebuilds of each project's own calculations and reproduce its published figures.
 
 ## Preview on your computer
-Double-click `index.html`, or run `python -m http.server` in this folder and open http://localhost:8000.
+Run `python -m http.server` in this folder and open http://localhost:8000.
 
 ## Put it online (free)
-**Option A: Vercel (works with a private repo)**
-1. Go to https://vercel.com and sign in with GitHub.
-2. Click **Add New → Project**, pick `Parth_Personal`, choose the branch with `index.html`.
-3. Framework preset: **Other**. Leave build settings empty. Click **Deploy**.
-4. You get a link like `parth-dhawan.vercel.app`. Rename it in Settings → Domains.
-
-**Option B: GitHub Pages (repo must be public on a free plan)**
+**GitHub Pages**
 1. Repo → **Settings → Pages**.
 2. Source: **Deploy from a branch**, branch `main`, folder `/ (root)`. Save.
 3. After a minute the site is live at `https://parthdhawan921-ops.github.io/Parth_Personal/`.
 
 ## Edit the content
-All text is plain HTML in `index.html`. Project numbers for the live models are at the top of
-each block in the `<script>` at the bottom (search for `A1`, `A2`, `A4`, `Pipeline`).
+All content lives in the `<script>` at the bottom of `index.html`:
+- `P`: the 8 projects (text, numbers, GitHub repo, method, limits, resume bullets)
+- `R`: the 4 roles (headline, receipt lines, which projects are featured and in what order)
+- `CV`: resume title, summary and skills per role
+- `SK`: the skills table · `CATCH`: the "mistakes I caught" cards
+
+To make a private project's link appear, set its `repo` to the repository name (for example, `repo:'email-uplift-targeting'`).
