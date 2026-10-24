@@ -9,7 +9,16 @@
 <meta property="og:title" content="Parth Dhawan · Data Analyst">
 <meta property="og:description" content="I find where the money leaks. 8 SQL, Python, Excel and Power BI projects, each ending in a business answer.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="assets/parth.jpg">
+<meta property="og:url" content="https://parthdhawan921-ops.github.io/Parth_Personal/">
+<meta property="og:image" content="https://parthdhawan921-ops.github.io/Parth_Personal/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Parth Dhawan, Data Analyst: I find where the money leaks.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Parth Dhawan · Data Analyst">
+<meta name="twitter:description" content="8 SQL, Python, Excel and Power BI projects, each ending in a business answer.">
+<meta name="twitter:image" content="https://parthdhawan921-ops.github.io/Parth_Personal/assets/og.jpg">
+<link rel="canonical" href="https://parthdhawan921-ops.github.io/Parth_Personal/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111923'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='Arial' font-weight='800' font-size='28' fill='%23f2f4f7'%3EPD%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -257,10 +266,11 @@ section{padding-block:88px}
 .caught-strip b{color:var(--ink);font-weight:600}
 
 /* compact rows */
-.row{display:grid;grid-template-columns:150px minmax(0,1.5fr) minmax(0,1fr) auto;gap:22px;align-items:center;padding:18px 20px;background:var(--surface);border:1px solid var(--rule);border-radius:14px;box-shadow:var(--edge);transition:border-color .16s,transform .16s var(--ease)}
+.row{display:grid;grid-template-columns:190px minmax(0,1.5fr) minmax(0,1fr) auto;gap:22px;align-items:center;padding:18px 20px;background:var(--surface);border:1px solid var(--rule);border-radius:14px;box-shadow:var(--edge);transition:border-color .16s,transform .16s var(--ease)}
 @media (hover:hover) and (pointer:fine){.row:hover{border-color:color-mix(in srgb,var(--accent) 50%,var(--rule));transform:translateY(-2px)}}
-.row .mini{height:84px;border-radius:10px;background:var(--paper);border:1px solid var(--rule);display:grid;place-items:center;overflow:hidden;color:var(--accent)}
-.row .mini svg{width:100%;height:100%}
+.row .mini{display:block;aspect-ratio:16/9;border-radius:10px;background:#fff;border:1px solid var(--rule);overflow:hidden;cursor:pointer;padding:0;max-width:100%}
+.row .mini img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .3s var(--ease)}
+@media (hover:hover) and (pointer:fine){.row .mini:hover img{transform:scale(1.04)}}
 .row h3{font-size:21px;line-height:1.15;font-weight:600;letter-spacing:-.02em;margin:8px 0 6px}
 .row .ans{font-size:14.5px;color:var(--ink-2)}
 .row .ans strong{color:var(--ink);font-weight:600}
@@ -270,8 +280,8 @@ section{padding-block:88px}
 .row .mk b.leak{color:var(--leak)} .row .mk b.gain{color:var(--gain)}
 .row .mk span{font-size:12.5px;color:var(--ink-3);line-height:1.3}
 .row .acts{display:flex;flex-direction:column;gap:8px}
-@media (max-width:1020px){.row{grid-template-columns:120px minmax(0,1fr) minmax(0,.8fr)}.row .acts{grid-column:1/-1;flex-direction:row;flex-wrap:wrap}}
-@media (max-width:680px){.row{grid-template-columns:minmax(0,1fr);gap:14px;padding:16px}.row .mini{height:96px}.row .mk{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:1020px){.row{grid-template-columns:160px minmax(0,1fr) minmax(0,.8fr)}.row .acts{grid-column:1/-1;flex-direction:row;flex-wrap:wrap}}
+@media (max-width:680px){.row{grid-template-columns:minmax(0,1fr);gap:14px;padding:16px}.row .mk{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* all projects index */
 .index-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:16px;margin:64px 0 16px}
@@ -364,6 +374,20 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
 .layer b{display:block;font:600 13.5px/1.2 var(--f-body)}
 .layer span{font:400 11.5px/1.4 var(--f-mono);color:var(--ink-2)}
 .layer i{display:block;height:4px;border-radius:2px;margin-bottom:8px}
+
+/* project screenshots in the case file */
+.shots{display:grid;gap:14px}
+.shot{margin:0;background:var(--surface);border:1px solid var(--rule);border-radius:12px;overflow:hidden}
+.shot a{display:block;background:#fff}
+.shot img{display:block;width:auto;max-width:100%;height:auto;max-height:560px;margin:0 auto}
+.shot figcaption{padding:10px 14px;font-size:13px;color:var(--ink-2);border-top:1px solid var(--rule)}
+
+/* phone: show the role picker straight after the headline */
+@media (max-width:700px){
+  .hero-main{display:flex;flex-direction:column}
+  .hero-main .who{order:1}.hero-main h1{order:2}.hero-main .picker{order:3;margin-top:4px}
+  .hero-main .lede{order:4;margin-top:22px}.hero-main .cta-row{order:5}
+}
 
 /* ---------- mistakes caught ---------- */
 .caught{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
@@ -497,12 +521,17 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 .cv ul li{margin-top:2px}
 .cv .cv-edu{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 @media print{
-  @page{size:A4;margin:12mm}
+  @page{size:A4;margin:11mm 12mm}
+  html,body{background:#fff!important}
   body>*:not(.cvwrap){display:none!important}
   body::before{display:none}
   .cvwrap{position:static;background:none;padding:0;overflow:visible}
   .cv-tools{display:none}
-  .cv{box-shadow:none;padding:0;max-width:none;border-radius:0}
+  .cv{box-shadow:none;padding:0;max-width:none;border-radius:0;font-size:12.4px;line-height:1.42}
+  .cv h1{font-size:27px}
+  .cv h4{margin:13px 0 6px;padding-bottom:4px}
+  .cv .cv-p{margin-top:7px}
+  .cv ul li{margin-top:1px}
 }
 
 /* ---------- command palette, toast ---------- */
@@ -549,7 +578,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 
 <header class="hero" id="top">
   <div class="wrap">
-    <div>
+    <div class="hero-main">
       <div class="who">
         <img src="assets/parth.jpg" alt="Parth Dhawan" width="58" height="58">
         <div><b>Parth Dhawan</b><span><i></i>Data Analyst · open to roles, available now</span></div>
@@ -737,7 +766,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
       <button type="button" data-r="finance">Finance / Research</button>
     </div>
     <div style="display:flex;gap:8px">
-      <button class="link-btn" type="button" id="cvPrint" hidden>Save as PDF</button>
+      <a class="link-btn" id="cvPdf" href="#" download hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></svg>Download PDF</a>
       <button class="link-btn solid" type="button" id="cvClose">Close</button>
     </div>
   </div>
@@ -786,7 +815,7 @@ cart:{title:'Cart leakage and repeat cohorts',short:'Cart leakage',domain:'E-com
   method:['Loaded five monthly CSVs into Delta tables on Databricks.','Profiled and cleaned: removed duplicates and invalid prices.','Built the view to cart to purchase funnel by users and by sessions.','Defined an abandoned cart as no purchase of that product within 7 days, excluding the last 7 days of data.','Valued the leak by month, brand and category with a Pareto analysis.','Built first-purchase cohorts and priced the nudge from stated assumptions.'],
   limits:['Recovery rate, margin and reminder cost are assumptions, not measured.','40.1% of abandoned value has no brand recorded.','The October cohort looks inflated because the data starts that month.'],
   cv:['Queried 20.7M clickstream events in Databricks SQL to size a $3.93M/month cart-abandonment leak (76.5% of 4.52M carts).','Pareto and cohort analysis: 23 of 465 categories hold half the leak; priced a reminder nudge at ~$91K/month net.'],
-  lab:'cart',mini:'cart'},
+  lab:'cart',shots:[["1", "Funnel tree from the project memo: 20.7M clicks to a $91K-a-month reminder idea"]]},
 email:{title:'Who should get the email?',short:'Email uplift',domain:'Marketing',tools:['Python','scikit-learn'],repo:null,
   q:'Send the men\'s email, the women\'s email, or nothing, and to which customers, to make the most extra profit?',
   a:'<strong>Send the men\'s email to everyone, with a small holdout.</strong> It earns about $131 extra profit per 1,000 customers. A machine-learning targeting model earned less ($73) in every scenario tested.',
@@ -797,7 +826,7 @@ email:{title:'Who should get the email?',short:'Email uplift',domain:'Marketing'
   method:['Checked the test was fair: sample-ratio test and covariate balance table.','Measured lift with t-tests and a 2,000-round bootstrap. Minimum detectable effect: $0.31 per customer.','Tested 38 segments with permutation p-values and Benjamini-Hochberg correction.','Trained a T-learner uplift model (gradient boosting, 5-fold CV) and checked it with a Qini curve.','Valued each policy with inverse-probability weighting and a margin × cost sensitivity table.'],
   limits:['Only two weeks of outcomes after the send.','No unsubscribe or complaint data, so list fatigue is not priced in.','Margin and email cost are assumptions, tested in a sensitivity table.'],
   cv:['Analysed a 64,000-customer randomised email test: +$0.77 spend per customer (95% CI $0.50 to $1.07) with bootstrap and BH-corrected segment tests.','Built a T-learner uplift model (scikit-learn) and showed blanket sending beats targeting: $131 vs $73 profit per 1,000.'],
-  lab:'email',mini:'email'},
+  lab:'email',shots:[["1", "Average visit, conversion and spend per customer for each email arm, with 95% intervals"], ["2", "Qini curve: how much extra spend the uplift model captures when targeting"]]},
 darkstore:{title:'Dark-store break-even model',short:'Dark-store break-even',domain:'Quick commerce',tools:['Excel'],repo:'dark-store-breakeven-model',
   q:'How many orders a day does a quick-commerce dark store need to break even, and which lever moves it furthest?',
   a:'<strong>About 1,133 orders a day, 5.4% above today\'s ~1,075.</strong> Basket size is the strongest lever: +10% adds about ₹2.4 lakh per store per month, roughly ₹85 crore a quarter across 1,171 stores.',
@@ -808,7 +837,7 @@ darkstore:{title:'Dark-store break-even model',short:'Dark-store break-even',dom
   method:['Rebuilt the quarter per order and per store per day: ~1,074.5 orders, 15.6% take rate.','Split costs into variable (rider, picking, packaging, payment, wastage) and fixed (rent, staff, power).','Calibrated product margin to the disclosed ₹108 revenue per order, and fixed cost to the disclosed margin.','Break-even = fixed cost per day ÷ contribution per order (~₹25.42).','Built live sensitivity grids, four scenarios, a tornado chart and a Checks sheet.'],
   limits:['The variable / fixed cost split is an assumption.','One quarter of company-wide averages; single stores will differ.','Benchmarked against the market leader only as a sanity check.'],
   cv:['Built a live Excel unit-economics model from Swiggy Instamart Q1 FY27 disclosures: break-even at ~1,133 orders/store/day.','Sensitivity grids, 4 scenarios and a tornado chart: a 10% bigger basket is worth ~₹85 crore a quarter.'],
-  lab:'darkstore',mini:'darkstore'},
+  lab:'darkstore',shots:[["1", "Tornado chart from the Excel model: AOV and rider cost move contribution the most"], ["2", "Break-even chart from the Excel model"]]},
 norda:{title:'One-command retail analytics pipeline',short:'Retail pipeline',domain:'Retail',tools:['Python','Power BI','Claude Code'],repo:'norda-ai-analyst-system',live:'https://parthdhawan921-ops.github.io/norda-ai-analyst-system/reports/html/dashboard.html',
   q:'Can a messy monthly shop export become checked numbers, a dashboard, a deck and a Power BI model without manual work?',
   a:'<strong>Yes, in under 30 seconds, behind a 41-check quality gate.</strong> It also found that 3 top laptop models sold out on 14 Nov and were never restocked, costing about €274K to €442K in December.',
@@ -819,7 +848,7 @@ norda:{title:'One-command retail analytics pipeline',short:'Retail pipeline',dom
   method:['Code computes, the AI only explains: every number comes from a script.','Metrics and quality rules are written in plain text, and the pipeline must follow them.','A failed check stops the run, and a bad run never overwrites a good dashboard.','Repeated tasks became reusable Claude Code skills (9 so far).'],
   limits:['Built on course practice data, so the business is fictional; the method is real.','Stock-out loss is a range because the counterfactual demand is estimated.'],
   cv:['Built a one-command Python pipeline (profile, clean, star schema, 41-check quality gate) producing a dashboard, deck and Power BI model in under 30 s.','Cleaned 160,821 order lines (3,997 duplicates, 16 brand spellings to 6) and found €274K to €442K of sales lost to stock-outs.'],
-  lab:'norda',mini:'norda'},
+  lab:'norda',shots:[["1", "The dashboard the pipeline builds: revenue, orders, countries and stock status"]]},
 sqlwh:{title:'SQL data warehouse and analytics',short:'SQL warehouse',domain:'Retail · CRM + ERP',tools:['SQL','MySQL'],repo:'sql-data-warehouse-analytics',
   q:'Can six raw CRM and ERP exports become one trusted sales model that answers business questions?',
   a:'<strong>Yes: a Bronze, Silver, Gold MySQL warehouse joins them into one star schema</strong> (18,484 customers, 295 products, 60,398 sales lines) with 13 SQL analyses on top. It models $29.36M of sales, 96.5% of it from bikes.',
@@ -830,7 +859,7 @@ sqlwh:{title:'SQL data warehouse and analytics',short:'SQL warehouse',domain:'Re
   method:['Bronze: bulk-load six raw CSVs into MySQL with no changes.','Silver: deduplicate, trim, standardise codes, fix invalid values, derive columns.','Gold: star schema views with surrogate keys (2 dimensions, 1 fact).','Quality checks for keys, NULLs, standard values, dates and sales = quantity × price.','13 numbered SQL analyses: ranking, trends, cumulative, YoY, segmentation, report views.','One-command build, checked on every push by GitHub Actions on MySQL 8.0.'],
   limits:['Course dataset, so the business is illustrative.','Full reload only; no incremental loads.','A few very old birthdates (before 1924) are kept as valid but unusual source values.'],
   cv:['Built a MySQL Medallion warehouse joining 6 CRM/ERP sources (~116K rows) into a star schema; 13 SQL analyses with CTEs and window functions.','Found and fixed 2 silent loading bugs (CRLF line endings, empty prices zeroing sales); added quality checks and GitHub Actions CI.'],
-  lab:'sqlwh',mini:'sqlwh'},
+  lab:'sqlwh',shots:[["1", "A real query from the analytics layer and its result on the built warehouse (MySQL 8.0)"]]},
 phonepe:{title:'India\'s UPI payments: PhonePe Pulse',short:'PhonePe Pulse',domain:'Fintech',tools:['Python','pandas'],repo:'phonepe-pulse-analysis',
   q:'Where is digital-payment adoption strong in India, and what actually drives transaction volume?',
   a:'<strong>20.5 billion transactions worth ₹35.6 lakh crore;</strong> quarterly volume grew about 29× from 2018 Q1 to 2021 Q2. User adoption drives volume (correlation 0.80); population density barely does (0.31).',
@@ -841,7 +870,7 @@ phonepe:{title:'India\'s UPI payments: PhonePe Pulse',short:'PhonePe Pulse',doma
   method:['Loaded five Excel sheets and profiled each: types, summary statistics, missing values.','Aggregated by state, year, quarter, payment type and phone brand.','Merged transactions with census demographics at the right grain.','Reconciled district totals against state totals to validate the data.','Ranked states, measured penetration and built a correlation matrix.'],
   limits:['Population comes from the census, so penetration ratios are approximate.','App opens were not reported before 2019 Q2.','Course case study data.'],
   cv:['Analysed 20.5B UPI transactions (₹35.6 lakh crore) across 36 states and 723 districts with pandas; quarterly volume grew ~29×.','Reconciled district vs state totals and corrected a running-total double count; adoption drives volume (r = 0.80) more than density (0.31).'],
-  lab:'phonepe',mini:'phonepe'},
+  lab:'phonepe',shots:[["1", "Karnataka transactions per quarter, from the notebook"], ["2", "Payment types in the latest quarter, from the notebook"]]},
 covid:{title:'COVID-19: spread, deaths and recovery',short:'COVID-19 analysis',domain:'Public health',tools:['Python','pandas','Matplotlib'],repo:'covid-19-data-analysis',
   q:'How did COVID-19 spread between Jan 2020 and May 2021, and where was it deadliest?',
   a:'<strong>The US led with 33.25M cases;</strong> France had Europe\'s largest single-day surge (117,900). The highest death rates, such as Yemen\'s 29%, mostly reflect very low testing rather than a deadlier virus.',
@@ -852,18 +881,18 @@ covid:{title:'COVID-19: spread, deaths and recovery',short:'COVID-19 analysis',d
   method:['Reshaped three wide files (one column per date) into long format with melt.','Cleaned blank provinces, missing coordinates and mixed date formats.','Aggregated provinces to country level and merged the three datasets (95,342 rows).','Converted cumulative counts to daily values with diff(), clipping negative corrections.','Answered 19 questions with charts and a written observation for each.'],
   limits:['Testing and reporting rules differ by country, so rates are indicative.','The US stopped reporting recoveries in 2021, so later recovery ratios read 0.','Data corrections create negative daily values, such as France at about −350K in May 2021.'],
   cv:['Reshaped and merged JHU time series for 276 regions over 494 days (melt, groupby, merge) and answered 19 questions in pandas.','Converted cumulative to daily values with diff() to avoid a common averaging error; documented reporting caveats.'],
-  lab:'covid',mini:'covid'},
+  lab:'covid',shots:[["1", "Confirmed cases over time for the top 7 countries, from the notebook"], ["2", "Daily new cases in Germany, France and Italy, including data corrections"]]},
 cpi:{title:'India CPI inflation, 2017 to 2023',short:'CPI inflation',domain:'Economics',tools:['Excel'],repo:'cpi-inflation-analysis',
   q:'What drives India\'s consumer prices, how did COVID change inflation, and does crude oil push it up?',
   a:'<strong>Inflation peaked at 6.62% in 2022 and eased to 3.18% in 2023.</strong> After COVID, transport rose most (0.29% to 0.66% a month). Crude oil\'s monthly link to CPI is weak: 0.13 at most.',
   one:'<strong>6.62% peak</strong> in 2022; crude oil\'s link to CPI is weak (0.13 at most).',
   data:'Official All-India CPI from MoSPI, 23 sub-categories, rural and urban, Jan 2013 to May 2023 (base 2012 = 100).',
   kpis:[['6.62%','YoY inflation in 2022, the peak','leak'],['+30.9','index points for spices, Jun 2022 to May 2023',''],['0.29→0.66%','monthly transport inflation, before vs after COVID',''],['0.13','highest correlation with crude oil (fuel and light)','']],
-  caught:'Noticed the source data is missing April 2019 and the General Index is blank for April and May 2020 (lockdown), and accounted for both in the annual averages.',
+  caught:'The source data is missing April 2019 and the General Index is blank for April and May 2020 (lockdown), so those years average fewer months. Flagged in the limits.',
   method:['Mapped 23 sub-categories to 11 broader categories with VLOOKUP.','Pivot tables for category contribution and yearly averages.','YoY and month-on-month inflation for the general index and food.','Average monthly inflation before (Mar 2017 to Mar 2020) and after (Apr 2020 to Mar 2023) COVID.','CORREL between crude oil and 33 CPI series (2021 to 2023).'],
   limits:['Partial years: 2017 starts in March and 2023 ends in May.','Category share uses summed index points, not official CPI weights.','Correlation over ~28 months is sensitive to a few large moves.'],
   cv:['Analysed MoSPI CPI data in Excel (pivot tables, VLOOKUP, 33 CORREL tests): inflation peaked at 6.62% in 2022 and eased to 3.18%.','Measured pre vs post COVID inflation by category (transport 0.29% to 0.66% a month) and found a weak crude oil link (max 0.13).'],
-  lab:'cpi',mini:'cpi'}
+  lab:'cpi',shots:[["1", "Year-over-year CPI inflation, chart from the Excel workbook"], ["2", "Average monthly inflation before and after COVID by category, from the workbook"]]}
 };
 var ORDER=['cart','sqlwh','norda','darkstore','phonepe','email','covid','cpi'];
 
@@ -932,9 +961,9 @@ var SK=[
 /* ================= CATCHES ================= */
 var CATCH=[
  {p:'sqlwh',bad:'The warehouse loaded with no errors, but country codes like <strong>DE, US and USA never became country names</strong> and every customer\'s gender read "n/a".',good:'The CSVs used Windows line endings, which left a hidden character on every row. I fixed the load: countries now collapse to 7 clean values and gender is filled.'},
- {p:'sqlwh',bad:'Seven sales lines showed <strong>$0 revenue</strong> even though quantity and price looked fine.',good:'Empty prices load as 0 in MySQL, and the cleaning rule then recalculated sales as quantity × 0. Sales are now recalculated only when a real price exists.'},
+ {p:'cart',bad:'October looked like <strong>the strongest month for new buyers</strong>, with a repeat rate twice as high as November and December.',good:'The data starts in October, so "new" buyers that month include long-time customers seen for the first time. I flagged the October cohort as unreliable instead of reporting it as growth.'},
  {p:'phonepe',bad:'Several states showed <strong>more registered users than people.</strong>',good:'Registered Users is a running total, so summing quarters counted the same users again. I used the latest quarter only: Delhi leads at 0.67 users per resident.'},
- {p:'phonepe',bad:'A simple count said <strong>Uttar Pradesh has 1,050 districts.</strong>',good:'Each district repeats once per quarter in that sheet. Counting the demographics sheet instead gives the true number: 75.'},
+ {p:'cpi',bad:'The yearly CPI averages looked complete, but <strong>2019 and 2020 were built from fewer months</strong> than the other years.',good:'The source file is missing April 2019, and the General Index is blank for April and May 2020 (lockdown). I flagged both so the yearly comparison is read with that in mind.'},
  {p:'covid',bad:'The "average daily deaths" ranking came from <strong>the mean of a cumulative column</strong>, which is not a daily figure.',good:'Converted cumulative counts to daily values with diff() first, then averaged. Both approaches are shown side by side in the notebook.'},
  {p:'norda',bad:'The company docs listed every market, but <strong>Spain and Austria (13% of revenue)</strong> were missing from them.',good:'The pipeline profiles the raw data against the written definitions first, so the gap was flagged before any report was built.'}
 ];
@@ -983,20 +1012,6 @@ function links(p,opt){
 }
 function chips(p){return '<div class="chips"><span class="chip domain">'+p.domain+'</span>'+p.tools.map(function(t){return '<span class="chip">'+t+'</span>'}).join('')+'</div>'}
 function kpiGrid(p){return '<div class="kpis">'+p.kpis.map(function(k){return '<div class="kpi"><b class="'+k[2]+'">'+k[0]+'</b><span>'+k[1]+'</span></div>'}).join('')+'</div>'}
-
-/* ================= MINI VISUALS ================= */
-function mini(id){
-  var s='<svg viewBox="0 0 150 84" preserveAspectRatio="xMidYMid meet" aria-hidden="true">';
-  if(id==='cart'){s+='<rect x="14" y="30" width="94" height="24" rx="4" fill="var(--leak)" opacity=".85"/><rect x="110" y="30" width="26" height="24" rx="4" fill="var(--gain)" opacity=".85"/><text x="14" y="70" font-size="10" font-family="var(--f-mono)" fill="var(--ink-3)">76.5% abandoned</text>'}
-  else if(id==='email'){var v=[0,27,73,131];v.forEach(function(x,i){var h=x/131*50;s+='<rect x="'+(22+i*30)+'" y="'+(66-h)+'" width="20" height="'+Math.max(h,1.5)+'" rx="3" fill="'+(i===3?'var(--gain)':i===2?'currentColor':'var(--ink-3)')+'" opacity="'+(i===3?1:.7)+'"/>'});s+='<line x1="14" x2="136" y1="66.5" y2="66.5" stroke="var(--rule)"/>'}
-  else if(id==='darkstore'){s+='<line x1="12" x2="138" y1="46" y2="46" stroke="var(--rule)"/><path d="M14 70 L136 18" stroke="var(--ink)" stroke-width="2" fill="none"/><line x1="70" x2="70" y1="12" y2="76" stroke="currentColor" stroke-dasharray="3 3"/><circle cx="64" cy="49" r="5" fill="var(--leak)"/>'}
-  else if(id==='norda'){for(var i=0;i<41;i++){s+='<rect x="'+(12+i*3.1)+'" y="30" width="2.2" height="24" rx="1" fill="var(--gain)"/>'}s+='<text x="12" y="70" font-size="10" font-family="var(--f-mono)" fill="var(--ink-3)">41/41 checks</text>'}
-  else if(id==='sqlwh'){var c=['#b07a43','#8d9aab','#d4a417'];['Bronze','Silver','Gold'].forEach(function(n,i){s+='<rect x="'+(12+i*44)+'" y="26" width="38" height="30" rx="5" fill="'+c[i]+'" opacity=".85"/><text x="'+(31+i*44)+'" y="70" text-anchor="middle" font-size="9.5" font-family="var(--f-mono)" fill="var(--ink-3)">'+n+'</text>'});s+='<path d="M50 41h6M94 41h6" stroke="var(--ink-3)" stroke-width="1.5"/>'}
-  else if(id==='phonepe'){var d=[134,187,341,417,709,815,1095,1460,1623,1449,2033,2869,3458,3941];var pts=d.map(function(v,i){return (12+i*9.5).toFixed(1)+','+(70-v/3941*52).toFixed(1)});s+='<path d="M'+pts.join(' L')+' L135.5,70 L12,70Z" fill="currentColor" opacity=".12"/><path d="M'+pts.join(' L')+'" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="135.5" cy="18" r="3.5" fill="currentColor"/>'}
-  else if(id==='covid'){var v2=[33.25,27.89,16.47,5.72,5.24,5,4.5];v2.forEach(function(x,i){var w=x/33.25*110;s+='<rect x="14" y="'+(10+i*9.6)+'" width="'+w+'" height="6.5" rx="2" fill="'+(i===0?'var(--leak)':'var(--ink-3)')+'" opacity="'+(i===0?.9:.55)+'"/>'})}
-  else if(id==='cpi'){var y=[3.95,3.90,6.38,5.27,6.62,3.18];var p2=y.map(function(v,i){return (16+i*23.5).toFixed(1)+','+(70-(v-2.5)/4.5*52).toFixed(1)});s+='<path d="M'+p2.join(' L')+'" fill="none" stroke="currentColor" stroke-width="2"/>';y.forEach(function(v,i){var xy=p2[i].split(',');s+='<circle cx="'+xy[0]+'" cy="'+xy[1]+'" r="'+(i===4?4:2.5)+'" fill="'+(i===4?'var(--leak)':'currentColor')+'"/>'})}
-  return s+'</svg>';
-}
 
 /* ================= LABS ================= */
 var LAB={};
@@ -1202,11 +1217,11 @@ function renderWork(animate){
   f.forEach(function(id,i){var p=P[id];
     if(i===0){h+='<article class="case'+(animate?' anim-in':'')+'"><div class="case-top"><div class="case-brief">'+
       '<span class="rank"><b>1</b>Best match'+(role==='all'?'':' for '+R[role].name)+'</span>'+chips(p)+'<h3>'+p.title+'</h3>'+
-      '<dl class="qa"><div><dt>Question</dt><dd>'+p.q+'</dd></div><div><dt>Answer</dt><dd>'+p.a+'</dd></div><div><dt>Data</dt><dd>'+p.data+'</dd></div></dl>'+
+      '<dl class="qa"><div><dt>Question</dt><dd>'+p.q+'</dd></div><div><dt>Answer</dt><dd>'+p.a+'</dd></div></dl>'+
       kpiGrid(p)+'<div class="case-links">'+links(p,{open:true,id:id})+'</div></div>'+
       '<div class="case-lab lab" data-lab="'+p.lab+'"></div></div>'+
       '<div class="caught-strip">'+ICON_CHECK+'<p><b>What I caught: </b>'+p.caught+'</p></div></article>'}
-    else{h+='<article class="row'+(animate?' anim-in':'')+'" style="'+(animate?'animation-delay:'+(i*60)+'ms':'')+'"><div class="mini">'+mini(p.mini)+'</div>'+
+    else{h+='<article class="row'+(animate?' anim-in':'')+'" style="'+(animate?'animation-delay:'+(i*60)+'ms':'')+'"><button class="mini" type="button" data-open="'+id+'" aria-label="Open the '+p.short+' case file"><img src="assets/shots/'+id+'-thumb.webp" alt="'+p.shots[0][1]+'" loading="lazy" width="640" height="360"></button>'+
       '<div style="min-width:0"><span class="rank"><b>'+(i+1)+'</b>'+p.domain+'</span><h3>'+p.title+'</h3><p class="ans">'+p.one+'</p></div>'+
       '<div class="mk">'+p.kpis.slice(0,2).map(function(k){return '<div><b class="'+k[2]+'">'+k[0]+'</b><span>'+k[1]+'</span></div>'}).join('')+'</div>'+
       '<div class="acts">'+links(p,{open:true,id:id})+'</div></article>'}
@@ -1283,6 +1298,7 @@ function openCase(id){
     '<div class="case-links" style="margin-top:18px">'+links(p)+'</div>'+
     '<div class="d-sec"><span class="label">Headline numbers</span>'+kpiGrid(p)+'</div>'+
     '<div class="d-sec"><span class="label">Try it</span><div class="d-lab lab" data-lab="'+p.lab+'"></div></div>'+
+    '<div class="d-sec"><span class="label">From the project</span><div class="shots">'+p.shots.map(function(sh,i){var src='assets/shots/'+id+'-'+(i+1)+'.webp';return '<figure class="shot"><a href="'+src+'" target="_blank" rel="noopener"><img src="'+src+'" alt="'+sh[1]+'" loading="lazy"></a><figcaption>'+sh[1]+'</figcaption></figure>'}).join('')+'</div></div>'+
     '<div class="d-sec"><span class="label">What I caught</span><div class="caught-strip" style="padding:14px 16px;background:var(--surface);border:1px solid var(--rule);border-radius:12px">'+ICON_CHECK+'<p>'+p.caught+'</p></div></div>'+
     '<div class="d-sec d-cols"><div><span class="label" style="display:block;margin-bottom:12px">Method</span><ol class="steps">'+p.method.map(function(m){return '<li>'+m+'</li>'}).join('')+'</ol></div>'+
     '<div><span class="label" style="display:block;margin-bottom:12px">Limits I flagged</span><ul class="bul">'+p.limits.map(function(m){return '<li>'+m+'</li>'}).join('')+'</ul></div></div>';
@@ -1313,10 +1329,11 @@ function renderCV(){
   '<h4>Education</h4><div class="cv-edu"><span><b>Bachelor of Pharmacy</b>, Chitkara University, Himachal Pradesh · CGPA 7.21/10</span><span class="mono">2021 to 2025</span></div>'+
   '<h4>Certifications</h4><p>Coding Ninjas: Advanced Certification in Data Analytics with Generative AI (2025 to now) · LinkedIn Learning: Claude Code for Data Analysis; Databricks for Data Analysts · Anthropic Academy: Claude 101</p>';
   $$('#cvRoles button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.r===cvRole)});
+  $('#cvPdf').setAttribute('href','assets/resume/'+PDF[cvRole]+'.pdf');
 }
 var framed=false;try{framed=window.self!==window.top}catch(e){framed=true}
-if(!framed)$('#cvPrint').hidden=false;
-$('#cvPrint').addEventListener('click',function(){window.print()});
+var PDF={data:'Parth_Dhawan_Data_Analyst',business:'Parth_Dhawan_Business_Analyst',product:'Parth_Dhawan_Product_Analyst',finance:'Parth_Dhawan_Financial_Analyst'};
+if(!framed)$('#cvPdf').hidden=false;
 function openCV(){cvRole=role==='all'?'data':role;renderCV();cvwrap.hidden=false;document.body.classList.add('locked');cvwrap.scrollTop=0;$('#cvClose').focus()}
 function closeCV(){cvwrap.hidden=true;if(drawer.hidden)document.body.classList.remove('locked')}
 $$('[data-open-cv]').forEach(function(b){b.addEventListener('click',openCV)});

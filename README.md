@@ -13,7 +13,9 @@ An interactive résumé website. One file (`index.html`) plus a photo, with no b
 - 8 projects, each with question → answer → headline numbers → a live model you can play with → what I caught → method → limits → GitHub link
 - "Mistakes I caught before they reached a report": real data problems found and fixed across the projects
 - A skills table that links every skill to the project that proves it
-- A role-tailored, one-page resume view (Save as PDF on the live site)
+- A role-tailored, one-page resume view with a downloadable PDF for each role (`assets/resume/`)
+- Real screenshots from each project (dashboards, notebook and Excel charts, a SQL query and its result) in `assets/shots/`
+- A link-preview card (`assets/og.jpg`) so the link shows your photo and headline on LinkedIn and WhatsApp
 - About (pharmacy to analytics), certificates, and contact details with one-click copy
 - Light and dark themes, a quick menu (Ctrl K / ⌘K), and keyboard shortcuts 1–4 to switch roles
 
@@ -36,3 +38,5 @@ All content lives in the `<script>` at the bottom of `index.html`:
 - `SK`: the skills table · `CATCH`: the "mistakes I caught" cards
 
 To make a private project's link appear, set its `repo` to the repository name (for example, `repo:'email-uplift-targeting'`).
+
+The resume PDFs are printed from the resume view. After changing `P` or `CV`, open the resume view in Chrome, pick the role, press Ctrl+P and save as PDF to `assets/resume/` with the same file name.
