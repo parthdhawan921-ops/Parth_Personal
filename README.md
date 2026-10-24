@@ -10,7 +10,7 @@ An interactive résumé website. One file (`index.html`) plus a photo, with no b
 - Each project also has its own link that opens its case file directly, e.g. `…/#cart` or `…/#sqlwh`.
 
 **What's on it**
-- 8 projects, each with question → answer → headline numbers → a live model you can play with → what I caught → method → limits → GitHub link
+- 9 projects, each with question → answer → headline numbers → a live model you can play with → what I caught → method → limits → GitHub link
 - "Mistakes I caught before they reached a report": real data problems found and fixed across the projects
 - A skills table that links every skill to the project that proves it
 - A role-tailored, one-page resume view with a downloadable PDF for each role (`assets/resume/`)
@@ -32,7 +32,7 @@ Run `python -m http.server` in this folder and open http://localhost:8000.
 
 ## Edit the content
 All content lives in the `<script>` at the bottom of `index.html`:
-- `P`: the 8 projects (text, numbers, GitHub repo, method, limits, resume bullets)
+- `P`: the 9 projects (text, numbers, GitHub repo, method, limits, resume bullets)
 - `R`: the 4 roles (headline, receipt lines, which projects are featured and in what order)
 - `CV`: resume title, summary and skills per role
 - `SK`: the skills table · `CATCH`: the "mistakes I caught" cards
