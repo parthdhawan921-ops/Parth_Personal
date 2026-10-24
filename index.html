@@ -816,7 +816,7 @@ cart:{title:'Cart leakage and repeat cohorts',short:'Cart leakage',domain:'E-com
   limits:['Recovery rate, margin and reminder cost are assumptions, not measured.','40.1% of abandoned value has no brand recorded.','The October cohort looks inflated because the data starts that month.'],
   cv:['Queried 20.7M clickstream events in Databricks SQL to size a $3.93M/month cart-abandonment leak (76.5% of 4.52M carts).','Pareto and cohort analysis: 23 of 465 categories hold half the leak; priced a reminder nudge at ~$91K/month net.'],
   lab:'cart',shots:[["1", "Funnel tree from the project memo: 20.7M clicks to a $91K-a-month reminder idea"]]},
-email:{title:'Who should get the email?',short:'Email uplift',domain:'Marketing',tools:['Python','scikit-learn'],repo:null,
+email:{title:'Who should get the email?',short:'Email uplift',domain:'Marketing',tools:['Python','scikit-learn'],repo:'email-uplift-targeting',
   q:'Send the men\'s email, the women\'s email, or nothing, and to which customers, to make the most extra profit?',
   a:'<strong>Send the men\'s email to everyone, with a small holdout.</strong> It earns about $131 extra profit per 1,000 customers. A machine-learning targeting model earned less ($73) in every scenario tested.',
   one:'<strong>$131 per 1,000 customers</strong> from the simple plan; the ML targeting model earned only $73.',
