@@ -1374,7 +1374,7 @@ var startRole=R[h]?h:(store('pd-role')||'all');
 setRole(R[startRole]?startRole:'all',{instant:true,noHash:!R[h]});
 printReceipt();
 if(P[h])setTimeout(function(){openCase(h)},200);
-window.addEventListener('hashchange',function(){var t=(location.hash||'').slice(1);if(R[t]&&t!==role)setRole(t,{noHash:true});else if(P[t]&&t!==curP)openCase(t)});
+window.addEventListener('hashchange',function(){var t=(location.hash||'').slice(1);if(R[t]){if(t!==role)setRole(t,{noHash:true});closeCase()}else if(P[t]&&t!==curP)openCase(t)});
 })();
 </script>
 </body>
