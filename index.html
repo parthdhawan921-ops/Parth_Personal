@@ -387,6 +387,8 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
 .shot a{display:block;background:#fff}
 .shot img{display:block;width:auto;max-width:100%;height:auto;max-height:560px;margin:0 auto}
 .shot figcaption{padding:10px 14px;font-size:13px;color:var(--ink-2);border-top:1px solid var(--rule)}
+.shot-live{display:block;width:fit-content;margin-top:4px;color:var(--accent);font-weight:500;text-decoration:none}
+.shot-live:hover{text-decoration:underline}
 
 /* phone: show the role picker straight after the headline */
 @media (max-width:700px){
@@ -846,7 +848,7 @@ darkstore:{title:'Dark-store break-even model',short:'Dark-store break-even',dom
   limits:['The variable / fixed cost split is an assumption.','One quarter of company-wide averages; single stores will differ.','Benchmarked against the market leader only as a sanity check.'],
   cv:['Built a live Excel unit-economics model from Swiggy Instamart Q1 FY27 disclosures: break-even at ~1,133 orders/store/day.','Sensitivity grids, 4 scenarios and a tornado chart: a 10% bigger basket is worth ~₹85 crore a quarter.'],
   lab:'darkstore',shots:[["1", "Tornado chart from the Excel model: AOV and rider cost move contribution the most"], ["2", "Break-even chart from the Excel model"]]},
-norda:{title:'One-command retail analytics pipeline',short:'Retail pipeline',domain:'Retail',tools:['Python','Power BI','Claude Code'],repo:'norda-ai-analyst-system',live:'https://parthdhawan921-ops.github.io/norda-ai-analyst-system/reports/html/dashboard.html',
+norda:{title:'One-command retail analytics pipeline',short:'Retail pipeline',domain:'Retail',tools:['Python','Power BI','Claude Code'],repo:'norda-ai-analyst-system',live:'https://parthdhawan921-ops.github.io/norda-ai-analyst-system/reports/html/dashboard.html',model:'https://parthdhawan921-ops.github.io/norda-ai-analyst-system/reports/html/data-model.html',
   q:'Can a messy monthly shop export become checked numbers, a dashboard, a deck and a Power BI model without manual work?',
   a:'<strong>Yes, in under 30 seconds, behind a 41-check quality gate.</strong> It also found that 3 top laptop models sold out on 14 Nov and were never restocked, costing about €274K to €442K in December.',
   one:'<strong>41/41 quality checks</strong> before any report; found <strong>€274K+</strong> of December sales lost to stock-outs.',
@@ -856,7 +858,7 @@ norda:{title:'One-command retail analytics pipeline',short:'Retail pipeline',dom
   method:['Code computes, the AI only explains: every number comes from a script.','Metrics and quality rules are written in plain text, and the pipeline must follow them.','A failed check stops the run, and a bad run never overwrites a good dashboard.','Repeated tasks became reusable Claude Code skills (9 so far).'],
   limits:['Built on course practice data, so the business is fictional; the method is real.','Stock-out loss is a range because the counterfactual demand is estimated.'],
   cv:['Built a one-command Python pipeline (profile, clean, star schema, 41-check quality gate) producing a dashboard, deck and Power BI model in under 30 s.','Cleaned 160,821 order lines (3,997 duplicates, 16 brand spellings to 6) and found €274K to €442K of sales lost to stock-outs.'],
-  lab:'norda',shots:[["1", "The dashboard the pipeline builds: revenue, orders, countries and stock status"]]},
+  lab:'norda',shots:[["1", "The dashboard the pipeline builds: revenue, orders, countries and stock status", "https://parthdhawan921-ops.github.io/norda-ai-analyst-system/reports/html/dashboard.html"], ["2", "The star schema the pipeline builds: 2 facts, 4 shared dimensions", "https://parthdhawan921-ops.github.io/norda-ai-analyst-system/reports/html/data-model.html"]]},
 pbimodel:{title:'Power BI data model makeover',short:'Power BI model',domain:'Data modeling',tools:['Power BI','Power Query','DAX'],repo:'powerbi-data-modeling-project',
   q:'Can a tangled 20-table Power BI model be rebuilt into a clean star schema that reports can trust?',
   a:'<strong>Yes: 20 raw tables became 13 (6 facts, 6 dimensions and a security table)</strong>, plus a table for the DAX measures. I removed test records, merged 5 customer tables into one, and added a junk dimension and a bridge table. The model holds 526,644 in sales across 80 orders.',
@@ -872,13 +874,13 @@ sqlwh:{title:'SQL data warehouse and analytics',short:'SQL warehouse',domain:'Re
   q:'Can six raw CRM and ERP exports become one trusted sales model that answers business questions?',
   a:'<strong>Yes: a Bronze, Silver, Gold MySQL warehouse joins them into one star schema</strong> (18,484 customers, 295 products, 60,398 sales lines) with 13 SQL analyses on top. It models $29.36M of sales, 96.5% of it from bikes.',
   one:'<strong>6 sources into 1 star schema</strong>; found and fixed 2 silent loading bugs; $29.36M of sales modelled.',
-  data:'6 CSV exports from a CRM and an ERP system, about 116K rows (Data with Baraa course dataset, rebuilt in MySQL with my own fixes and CI).',
+  data:'6 CSV exports from a CRM and an ERP system, about 116K rows. Built from Data with Baraa\'s <a href="https://github.com/DataWithBaraa/sql-data-warehouse-project" target="_blank" rel="noopener">data warehouse</a> and <a href="https://github.com/DataWithBaraa/sql-data-analytics-project" target="_blank" rel="noopener">data analytics</a> course projects (MIT licence), rebuilt in MySQL with my own fixes and CI.',
   kpis:[['6 → 1','source files into one star schema',''],['$29.36M','sales modelled across 27,659 orders',''],['96.5%','of revenue comes from bikes',''],['2 fixed','silent bugs that distorted the numbers','gain']],
   caught:'Ran the full pipeline end to end and caught two silent bugs: hidden line-ending characters that stopped country and gender cleaning, and empty prices that turned 7 sales lines into $0.',
   method:['Bronze: bulk-load six raw CSVs into MySQL with no changes.','Silver: deduplicate, trim, standardise codes, fix invalid values, derive columns.','Gold: star schema views with surrogate keys (2 dimensions, 1 fact).','Quality checks for keys, NULLs, standard values, dates and sales = quantity × price.','13 numbered SQL analyses: ranking, trends, cumulative, YoY, segmentation, report views.','One-command build, checked on every push by GitHub Actions on MySQL 8.0.'],
   limits:['Course dataset, so the business is illustrative.','Full reload only; no incremental loads.','A few very old birthdates (before 1924) are kept as valid but unusual source values.'],
-  cv:['Built a MySQL Medallion warehouse joining 6 CRM/ERP sources (~116K rows) into a star schema; 13 SQL analyses with CTEs and window functions.','Found and fixed 2 silent loading bugs (CRLF line endings, empty prices zeroing sales); added quality checks and GitHub Actions CI.'],
-  lab:'sqlwh',shots:[["1", "A real query from the analytics layer and its result on the built warehouse (MySQL 8.0)"]]},
+  cv:['Built a MySQL Medallion warehouse joining 6 CRM/ERP sources (~116K rows) into a star schema; 13 SQL analyses with CTEs and window functions.','Found and fixed 2 silent loading bugs (CRLF line endings, empty prices zeroing sales); extended the quality checks and added GitHub Actions CI.'],
+  lab:'sqlwh',shots:[["1", "A real query from the analytics layer and its result on the built warehouse (MySQL 8.0)"], ["2", "Architecture from the Data with Baraa course, drawn for SQL Server. I built it in MySQL 8.0."], ["3", "Analytics roadmap from the course. My 13 SQL scripts follow it step by step."]]},
 phonepe:{title:'India\'s UPI payments: PhonePe Pulse',short:'PhonePe Pulse',domain:'Fintech',tools:['Python','pandas'],repo:'phonepe-pulse-analysis',
   q:'Where is digital-payment adoption strong in India, and what actually drives transaction volume?',
   a:'<strong>20.5 billion transactions worth ₹35.6 lakh crore;</strong> quarterly volume grew about 29× from 2018 Q1 to 2021 Q2. User adoption drives volume (correlation 0.80); population density barely does (0.31).',
@@ -1028,6 +1030,7 @@ function links(p,opt){
   if(p.repo)h+='<a class="link-btn" href="'+GH+p.repo+'" target="_blank" rel="noopener">'+ICON_GH+'GitHub</a>';
   else h+='<a class="link-btn muted" href="#contact" title="This repository is private for now">'+ICON_GH+'Code on request</a>';
   if(p.live)h+='<a class="link-btn" href="'+p.live+'" target="_blank" rel="noopener">'+ICON_LIVE+'Live dashboard</a>';
+  if(p.model&&!opt.open)h+='<a class="link-btn" href="'+p.model+'" target="_blank" rel="noopener">'+ICON_OPEN+'Data model</a>';
   return h;
 }
 function chips(p){return '<div class="chips"><span class="chip domain">'+p.domain+'</span>'+p.tools.map(function(t){return '<span class="chip">'+t+'</span>'}).join('')+'</div>'}
@@ -1342,7 +1345,7 @@ function openCase(id){
     '<div class="case-links" style="margin-top:18px">'+links(p)+'</div>'+
     '<div class="d-sec"><span class="label">Headline numbers</span>'+kpiGrid(p)+'</div>'+
     '<div class="d-sec"><span class="label">Try it</span><div class="d-lab lab" data-lab="'+p.lab+'"></div></div>'+
-    '<div class="d-sec"><span class="label">From the project</span><div class="shots">'+p.shots.map(function(sh,i){var src='assets/shots/'+id+'-'+(i+1)+'.webp';return '<figure class="shot"><a href="'+src+'" target="_blank" rel="noopener"><img src="'+src+'" alt="'+sh[1]+'" loading="lazy"></a><figcaption>'+sh[1]+'</figcaption></figure>'}).join('')+'</div></div>'+
+    '<div class="d-sec"><span class="label">From the project</span><div class="shots">'+p.shots.map(function(sh,i){var src='assets/shots/'+id+'-'+(i+1)+'.webp';return '<figure class="shot"><a href="'+(sh[2]||src)+'" target="_blank" rel="noopener"><img src="'+src+'" alt="'+sh[1]+'" loading="lazy"></a><figcaption>'+sh[1]+(sh[2]?'<a class="shot-live" href="'+sh[2]+'" target="_blank" rel="noopener">Open the live page ↗</a>':'')+'</figcaption></figure>'}).join('')+'</div></div>'+
     '<div class="d-sec"><span class="label">What I caught</span><div class="caught-strip" style="padding:14px 16px;background:var(--surface);border:1px solid var(--rule);border-radius:12px">'+ICON_CHECK+'<p>'+p.caught+'</p></div></div>'+
     '<div class="d-sec d-cols"><div><span class="label" style="display:block;margin-bottom:12px">Method</span><ol class="steps">'+p.method.map(function(m){return '<li>'+m+'</li>'}).join('')+'</ol></div>'+
     '<div><span class="label" style="display:block;margin-bottom:12px">Limits I flagged</span><ul class="bul">'+p.limits.map(function(m){return '<li>'+m+'</li>'}).join('')+'</ul></div></div>';
