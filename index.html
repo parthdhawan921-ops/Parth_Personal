@@ -1239,7 +1239,7 @@ document.addEventListener('click',function(e){var b=e.target.closest('[data-open
 var cvwrap=$('#cvwrap'),cvRole='data';
 var framed=false;try{framed=window.self!==window.top}catch(e){framed=true}
 var PDF={data:'Parth_Dhawan_Data_Analyst',business:'Parth_Dhawan_Business_Analyst',product:'Parth_Dhawan_Product_Analyst',finance:'Parth_Dhawan_Financial_Analyst'};
-var CVT={data:'Data',business:'Business',product:'Product',finance:'Financial'},CVV='?v=20261025';
+var CVT={data:'Data',business:'Business',product:'Product',finance:'Financial'},CVV='?v=20261025b';
 function renderCV(){
   var f='assets/resume/'+PDF[cvRole],pdf=f+'.pdf'+CVV,alt='Resume: Parth Dhawan, Aspiring '+CVT[cvRole]+' Analyst';
   // phones and browsers without a PDF viewer get a picture of the one page instead
