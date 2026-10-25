@@ -416,24 +416,17 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
 .catch-body p{font-size:14px;color:var(--ink-2)}
 .catch-body p strong{color:var(--ink);font-weight:600}
 
-/* ---------- skills matrix ---------- */
-.matrix-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:14px;background:var(--surface)}
-.matrix{width:100%;border-collapse:collapse;min-width:640px}
-.matrix th,.matrix td{padding:11px 14px;border-bottom:1px solid var(--rule);text-align:center;font-size:14px}
-.matrix thead th{font:500 11.5px/1.3 var(--f-mono);color:var(--ink-3);letter-spacing:.03em;vertical-align:bottom;background:var(--paper)}
-.matrix thead th button{all:unset;cursor:pointer;display:block;color:var(--ink-2)}
-.matrix thead th button:hover{color:var(--accent)}
-.matrix thead th button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.matrix thead th b{display:block;color:var(--ink);font:600 13.5px/1.2 var(--f-body);letter-spacing:0;margin-top:3px}
-.matrix th[scope=row]{text-align:left;font-weight:500;color:var(--ink)}
-.matrix th[scope=row] small{display:block;color:var(--ink-3);font:400 12px/1.3 var(--f-mono);margin-top:2px}
-.matrix tbody tr:hover{background:var(--accent-soft)}
-.matrix tbody tr:last-child th,.matrix tbody tr:last-child td{border-bottom:0}
-.dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--accent)}
-.dot.lite{background:transparent;border:1.5px solid var(--accent)}
-.matrix td.none::before{content:"";display:inline-block;width:12px;height:1px;background:var(--rule);vertical-align:middle}
-.mlegend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:13px;color:var(--ink-2)}
-.mlegend span{display:inline-flex;align-items:center;gap:8px}
+/* ---------- skills list ---------- */
+.sklist{border:1px solid var(--rule);border-radius:14px;background:var(--surface);overflow:hidden}
+.skrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:24px;align-items:center;padding:16px 22px;border-bottom:1px solid var(--rule)}
+.skrow:last-child{border-bottom:0}
+.sk-name h3{margin:0;font:600 16px/1.3 var(--f-body);letter-spacing:0;color:var(--ink)}
+.sk-name p{margin:4px 0 0;font-size:14px;line-height:1.45;color:var(--ink-2)}
+.sk-proj{display:flex;flex-wrap:wrap;gap:8px}
+.sk-chip{all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:center;height:30px;padding:0 12px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font:500 13px/1 var(--f-body);white-space:nowrap;transition:background .15s,color .15s}
+.sk-chip:hover{background:var(--accent);color:#fff}
+.sk-chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:700px){.skrow{grid-template-columns:1fr;gap:10px;padding:14px 16px}}
 
 /* ---------- journey ---------- */
 .journey-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:56px}
@@ -687,10 +680,9 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
   <div class="wrap">
     <div class="sec-head">
       <div><span class="label">Skills, with proof</span><h2>Every skill points to a project.</h2></div>
-      <p id="skillsLede">No progress bars, no self-ratings. Each dot shows where I used the skill. Click a project to open it.</p>
+      <p id="skillsLede">No progress bars or self-ratings. Each skill links to the projects that prove it.</p>
     </div>
-    <div class="matrix-wrap"><table class="matrix" id="matrix"><thead></thead><tbody></tbody></table></div>
-    <div class="mlegend"><span><span class="dot"></span>core of the project</span><span><span class="dot lite"></span>used along the way</span></div>
+    <div class="sklist" id="skList"></div>
   </div>
 </section>
 
@@ -848,21 +840,16 @@ finance:{title:"Financial & Research Analyst | Excel Modelling · SQL · Python"
 
 /* ================= SKILLS ================= */
 var SK=[
- ['SQL','CTEs, window functions, joins',{cart:2,sqlwh:2,bike:2,norda:1}],
- ['Data modelling','star schema, facts and dimensions',{pbimodel:2,sqlwh:2,norda:2}],
- ['Data cleaning and quality checks','duplicates, validation, reconciliation',{norda:2,sqlwh:2,phonepe:2,bike:2,pbimodel:1,cart:1,covid:1,cpi:1}],
- ['Python','pandas, NumPy, Matplotlib',{norda:2,phonepe:2,covid:2,email:2}],
- ['Statistics and A/B testing','bootstrap, multiple testing, correlation',{email:2,phonepe:1,cpi:1,cart:1}],
- ['Machine learning','scikit-learn, uplift modelling',{email:2}],
- ['Funnels and cohorts','conversion, retention, Pareto',{cart:2,email:1}],
- ['Excel modelling','sensitivity, scenarios, pivot tables',{darkstore:2,cpi:2}],
- ['Power BI and DAX','measures, relationships',{pbimodel:2,bike:2,norda:2}],
- ['Power Query (M)','merge, unpivot, split, filter',{pbimodel:2}],
- ['Dashboards and charts','KPIs, visuals',{norda:2,bike:2,covid:1,phonepe:1,cpi:1,darkstore:1,cart:1}],
- ['Unit economics','AOV, GMV, contribution, break-even',{darkstore:2,cart:1,email:1}],
- ['Market and economic research','official data, public filings',{cpi:2,phonepe:2,darkstore:2}],
- ['Automation and CI','reusable skills, GitHub Actions',{norda:2,sqlwh:1}],
- ['Business recommendation','memo, money impact',{cart:2,email:2,darkstore:2,norda:2,sqlwh:1,phonepe:1,cpi:1,covid:1}]
+ ['SQL','CTEs, window functions and joins, up to 20.7M rows in one project.',['sqlwh','cart','dbx','bike']],
+ ['Power BI and DAX','A 20-table model rebuilt as a star schema, and a 3-page dashboard with DAX measures.',['pbimodel','bike','norda']],
+ ['Python','pandas and Matplotlib on UPI payments, COVID data and a 64,000-customer email test.',['phonepe','email','covid','norda']],
+ ['Excel','Live-formula models: a dark-store break-even with scenarios and checks, and 10 years of CPI data.',['darkstore','cpi']],
+ ['Data cleaning and checks','Caught double counting, running totals and hidden characters before they reached a report.',['dbx','sqlwh','phonepe','bike','norda','pbimodel']],
+ ['Databricks','2.4 GB loaded into Delta tables through Unity Catalog, then queried and charted in Databricks SQL.',['cart','dbx']],
+ ['Data modelling','Star schemas with facts and dimensions, so every report counts each order once.',['pbimodel','sqlwh','norda']],
+ ['Statistics and A/B testing','Confidence intervals, multiple-testing correction, correlation and an uplift model.',['email','phonepe','cpi']],
+ ['Funnels and cohorts','A view-to-cart-to-purchase funnel, first-purchase cohorts and a Pareto of the leak.',['cart']],
+ ['Business recommendations','Every project ends in a number a manager can act on.',['cart','darkstore','email','norda']]
 ];
 
 /* ================= CATCHES ================= */
@@ -1213,10 +1200,10 @@ function renderCaught(){
 }
 function renderSkills(){
   var cols=role==='all'?ORDER:R[role].feat;
-  $('#matrix thead').innerHTML='<tr><th scope="col" style="text-align:left">Skill</th>'+cols.map(function(id){return '<th scope="col"><button type="button" data-open="'+id+'">'+P[id].domain.split(' ·')[0]+'<b>'+P[id].short+'</b></button></th>'}).join('')+'</tr>';
-  $('#matrix tbody').innerHTML=SK.filter(function(s){return cols.some(function(id){return s[2][id]})}).sort(function(a,b){function sc(s){return cols.reduce(function(t,id){return t+(s[2][id]||0)},0)}return sc(b)-sc(a)}).map(function(s){
-    return '<tr><th scope="row">'+s[0]+'<small>'+s[1]+'</small></th>'+cols.map(function(id){var v=s[2][id]||0;return v?'<td><span class="dot'+(v===1?' lite':'')+'" aria-label="'+(v===2?'core':'used')+'"></span></td>':'<td class="none" aria-label="not used"></td>'}).join('')+'</tr>'}).join('');
-  $('#skillsLede').textContent=role==='all'?'No progress bars, no self-ratings. Each dot shows where I used the skill. Click a project to open it.':'The skills behind the '+R[role].feat.length+' '+R[role].name+' projects, strongest first. Click a project to open it.';
+  var rows=SK.map(function(s){return [s,s[2].filter(function(id){return cols.indexOf(id)>-1})]}).filter(function(r){return r[1].length});
+  if(role!=='all')rows.sort(function(a,b){return b[1].length-a[1].length});
+  $('#skList').innerHTML=rows.map(function(r){return '<div class="skrow"><div class="sk-name"><h3>'+r[0][0]+'</h3><p>'+r[0][1]+'</p></div><div class="sk-proj">'+r[1].map(function(id){return '<button type="button" class="sk-chip" data-open="'+id+'" aria-label="Open the '+P[id].short+' case file">'+P[id].short+'</button>'}).join('')+'</div></div>'}).join('');
+  $('#skillsLede').textContent=role==='all'?'No progress bars or self-ratings. Each skill links to the projects that prove it.':'The skills behind the '+R[role].feat.length+' '+R[role].name+' projects, strongest first. Click a project to open it.';
 }
 
 /* ================= RECEIPT ================= */
